@@ -1,0 +1,8 @@
+# Переводы строк: в репозитории и в рабочей папке — LF (как задано в .editorconfig).
+# Без этого Git на Windows (core.autocrlf=true) превращал бы LF в CRLF при каждом checkout.
+* text=auto eol=lf
+
+# Двоичные файлы — не трогать
+*.woff2 binary
+*.webp  binary
+*.mp4   binary

@@ -1,0 +1,18 @@
+// Статус чека: принят, на проверке, отклонён. Просто цветной текст
+
+@use "../base/variables" as *
+
+.status
+  font-size: 14px
+  font-weight: $font-book
+  line-height: 20.3px
+  white-space: nowrap
+
+  &--accepted
+    color: $color-status-accepted
+
+  &--pending
+    color: $color-status-pending
+
+  &--rejected
+    color: $color-status-rejected

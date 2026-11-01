@@ -1,0 +1,96 @@
+// Кнопка. При наведении из-за углов выезжают два тёмных круга и заливают её
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.button
+  --button-gap: 28px
+  // Во сколько раз растут круги при наведении. Широким кнопкам нужно больше
+  --button-fill-scale: 8
+
+  position: relative
+  // Свой слой для z-index, чтобы круги ушли под текст, но не под фон секции
+  isolation: isolate
+  overflow: hidden
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  gap: var(--button-gap)
+  height: 56px
+  padding-inline: 40px
+  border: 1px solid $color-border-button
+  border-radius: $radius-xl
+  background-color: $color-primary
+  color: $color-white
+  font-family: inherit
+  font-size: 16px
+  font-weight: $font-book
+  white-space: nowrap
+  cursor: pointer
+  transition: color $transition-base, border-color $transition-base
+
+  // Круги прячутся за углами, координаты взяты из макета
+  &::before,
+  &::after
+    content: ""
+    position: absolute
+    z-index: -1
+    width: 52px
+    height: 52px
+    border-radius: 50%
+    background-color: $color-primary-dark
+    transition: transform $transition-slow
+
+  &::before
+    top: -55px
+    left: -95px
+
+  &::after
+    right: -91px
+    bottom: -56px
+
+  // Восьмикратного увеличения вроде хватает, чтобы вдвоём перекрыть кнопку
+  &:hover,
+  &:focus-visible
+    border-color: $color-border-button
+
+    &::before,
+    &::after
+      transform: scale(var(--button-fill-scale))
+
+    .button__icon
+      // Стрелка разворачивается вправо
+      rotate: 45deg
+
+  &__icon
+    @include icon-mask("../images/icons/arrow.svg", 12px)
+    transition: rotate $transition-base
+
+  // Модификаторы
+
+  &--outline
+    border-color: $color-primary
+    background-color: transparent
+    color: $color-primary
+
+    &:hover,
+    &:focus-visible
+      color: $color-white
+
+  &--sm
+    --button-gap: 16px
+    height: 50px
+    padding-inline: 30px
+
+  &--xs
+    --button-gap: 20px
+    height: 40px
+    padding-inline: 24px
+
+  &--form
+    height: 48px
+
+  // Кнопка во всю ширину (в окнах, в кабинете на телефоне) бывает до ~430px.
+  // Круги ×8 смыкаются только у краёв, посередине оставалась полоса — ×14 закрывают её целиком
+  &.full
+    --button-fill-scale: 14

@@ -1,0 +1,118 @@
+// Подвал
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.footer
+  background-color: $color-primary-dark
+  color: $color-white
+  font-weight: $font-light
+  overflow: hidden
+
+  &__info
+    display: flex
+    align-items: flex-start
+    justify-content: space-between
+    gap: 40px
+    max-width: $container-width
+    margin-inline: auto
+    // Блок в макете 1340px — отсюда поля по 50px
+    padding: 40px 50px
+
+  &__legal
+    display: flex
+    flex-direction: column
+    gap: 1.6em
+    width: 400px
+    font-size: 13px
+    line-height: 1.6
+
+  &__phone
+    width: 400px
+    font-size: 18px
+    line-height: 1.6
+
+  &__phone-link
+    white-space: nowrap
+
+    &:hover
+      text-decoration: underline
+
+  &__docs
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    gap: 14px
+    font-size: 14px
+    text-align: right
+
+  &__link
+    text-decoration: underline
+    text-underline-offset: 3px
+    transition: opacity $transition-fast
+
+    &:hover
+      opacity: 0.7
+
+  // Сноска к знаку «Рекомендовано дерматологами» с первого экрана
+  &__note
+    max-width: $container-width
+    margin-inline: auto
+    padding: 12px 50px 60px
+    font-size: 12px
+
+  &__logo
+    width: 100%
+    max-width: $container-width
+    height: auto
+    margin-inline: auto
+
+  @include media(tablet)
+    &__info
+      flex-direction: column
+      padding-inline: 40px
+
+    &__legal,
+    &__phone
+      width: auto
+
+    &__note
+      padding-inline: 40px
+
+    &__docs
+      align-items: flex-start
+      text-align: left
+
+  // На узком экране буквы логотипа упирались в края — даём поля, как у текста над ним.
+  // Снизу тоже: в макете буквы стоят на самом краю, но так смотрится лучше
+  @include media(laptop)
+    &__logo
+      padding-inline: $container-padding-tablet
+      padding-bottom: 24px
+
+  // Телефон: в макете всё по центру
+  @include media(tablet-sm)
+    text-align: center
+
+    &__info
+      align-items: center
+      gap: 24px
+      padding: 40px $container-padding-mobile 52px
+
+    &__legal
+      font-size: 12px
+
+    &__phone
+      font-size: 15px
+      line-height: 1.6
+
+    &__docs
+      align-items: center
+      text-align: center
+
+    &__note
+      padding: 0 $container-padding-mobile 60px
+
+    &__logo
+      padding-inline: $container-padding-mobile
+      padding-bottom: 16px

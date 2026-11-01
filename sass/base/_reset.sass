@@ -1,0 +1,50 @@
+// Сброс: только того, что реально мешает, без normalize целиком
+
+*,
+*::before,
+*::after
+  box-sizing: border-box
+
+body,
+h1, h2, h3, h4,
+p,
+figure,
+blockquote,
+dl, dd
+  margin: 0
+
+// Маркеры убираем только у списков с классом — у текстовых пусть остаются
+ul[class],
+ol[class]
+  margin: 0
+  padding: 0
+  list-style: none
+
+img,
+picture,
+video,
+svg
+  display: block
+  max-width: 100%
+
+// Дабы картинка с атрибутами width/height не плющилась, если CSS меняет только ширину, пробуем так
+img
+  height: auto
+
+input,
+button,
+textarea,
+select
+  font: inherit
+  color: inherit
+
+a
+  color: inherit
+  text-decoration: none
+
+p, h1, h2, h3
+  overflow-wrap: break-word
+
+// Без этого любой display: flex перебивает атрибут hidden
+[hidden]
+  display: none !important

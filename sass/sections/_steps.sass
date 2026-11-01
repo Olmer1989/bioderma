@@ -1,0 +1,81 @@
+// Как стать участником: заголовок с кнопкой слева, шаги справа
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.steps
+  &__container
+    display: flex
+    gap: 100px
+    padding-block: 80px
+
+  &__intro
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: flex-start
+    flex-shrink: 0
+    width: 340px
+    padding-bottom: 30px
+
+  &__list
+    flex-grow: 1
+    counter-reset: step
+
+  &__item
+    counter-increment: step
+    display: grid
+    grid-template-columns: 80px 1fr
+    grid-template-rows: auto auto
+    column-gap: 28px
+    row-gap: 8px
+    align-items: center
+    // Сверху на пиксель меньше: линия входит в высоту шага, в макете он 115px (на телефоне 148)
+    padding-block: 23px 24px
+    border-top: 1px solid $color-border
+
+    // Номер «01», «02»… из счётчика растянут на обе строки шага
+    &::before
+      content: counter(step, decimal-leading-zero)
+      grid-row: 1 / 3
+      font-size: 56px
+      font-weight: $font-light
+
+  &__item-title
+    font-size: 24px
+    font-weight: $font-book
+
+  &__item-text
+    grid-column: 2
+    font-size: 16px
+    line-height: 1.6
+    color: $color-text-muted
+
+  @include media(tablet)
+    &__container
+      flex-direction: column
+      gap: 40px
+
+    &__intro
+      width: auto
+      gap: 32px
+      padding-bottom: 0
+
+  // Телефон: заголовок, шаги, а кнопка под ними по центру
+  @include media(tablet-sm)
+    &__container
+      gap: 32px
+      padding-block: 60px
+
+    &__intro
+      display: contents
+
+    .button
+      order: 1
+      align-self: center
+
+    &__item-title
+      font-size: 22px
+
+    &__item-text
+      font-size: 14px

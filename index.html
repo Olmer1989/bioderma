@@ -1,0 +1,1351 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Покупайте BIODERMA — выигрывайте призы! | Акция в «Фармленд»</title>
+    <meta
+      name="description"
+      content="Купите 2 продукта BIODERMA в сети «Фармленд», один из которых — гаммы ATODERM, загрузите чек и участвуйте в розыгрыше бьюти-гаджетов и сертификатов на 150 000 ₽."
+    />
+
+    <link rel="icon" href="./images/logo-bioderma.svg" type="image/svg+xml" />
+
+    <link
+      rel="preload"
+      href="./fonts/gotham-light.woff2?v=2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./fonts/gotham-book.woff2?v=2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <!-- Постер главного видео — пусть грузится первым, он самый тяжёлый -->
+    <link rel="preload" href="./images/hero/hero-family.webp" as="image" fetchpriority="high" />
+
+    <link rel="stylesheet" href="./css/main.css" />
+
+    <!-- Модуль запускается после разбора страницы-->
+    <script type="module" src="./js/main.js"></script>
+  </head>
+
+  <body>
+    <!-- Шапка -->
+    <header class="header" data-header>
+      <div class="header__container">
+        <a class="header__brand" href="#top" aria-label="BIODERMA × Фармленд — на главную">
+          <img
+            class="header__logo"
+            src="./images/logo-bioderma.svg"
+            width="197"
+            height="40"
+            alt="BIODERMA"
+          />
+          <img
+            class="header__logo"
+            src="./images/logo-farmlend.svg"
+            width="126"
+            height="40"
+            alt="farmlend.ru"
+          />
+        </a>
+
+        <!-- На узких экранах меню открывается бургером (burger.js) -->
+        <nav class="header__nav" id="header-nav" aria-label="Основная навигация" data-burger-menu>
+          <ul class="header__menu">
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="#how">Как участвовать</a>
+            </li>
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="#prizes">Призы</a>
+            </li>
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="#winners">Победители</a>
+            </li>
+            <li class="header__menu-item">
+              <!-- TODO: ссылка на PDF с правилами, когда пришлёт заказчик -->
+              <a class="header__menu-link" href="#rules">Правила</a>
+            </li>
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="#help">Вопрос-ответ</a>
+            </li>
+          </ul>
+          <button
+            class="button button--outline button--sm header__menu-cta"
+            type="button"
+            data-popup-open="login"
+          >
+            <span class="button__text">Личный кабинет</span>
+            <span class="button__icon" aria-hidden="true"></span>
+          </button>
+        </nav>
+
+        <!-- Пока открывает окно входа, оттуда (демо) — в кабинет.
+          TODO (бэкенд): вошедшим — сразу ссылка на lk.html -->
+        <button class="button button--outline button--sm" type="button" data-popup-open="login">
+          <span class="button__text">Личный кабинет</span>
+          <span class="button__icon" aria-hidden="true"></span>
+        </button>
+
+        <button
+          class="header__burger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="header-nav"
+          aria-label="Открыть меню"
+          data-burger
+        >
+          <span class="header__burger-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main" id="top">
+      <!-- Первый экран -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero__container">
+          <div class="hero__content">
+            <div class="hero__heading">
+              <p class="hero__dates">
+                <time datetime="2026-11-09">9 ноября</time>
+                —
+                <time datetime="2026-12-06">6 декабря 2026</time>
+              </p>
+              <h1 class="hero__title" id="hero-title">Покупайте BIODERMA — выигрывайте призы!</h1>
+            </div>
+
+            <div class="hero__offer">
+              <p class="hero__text">
+                Купите 2 продукта BIODERMA <br class="br-mobile" />в сети «Фармленд».
+                <br />
+                Один из которых — гаммы <strong>ATODERM</strong>.
+              </p>
+              <!-- Чек грузят только вошедшие, поэтому здесь сначала вход.
+                TODO (бэкенд): вошедшим — сразу окно загрузки чека -->
+              <button class="button" type="button" data-popup-open="login">
+                <span class="button__text">Загрузить чек</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <img
+              class="hero__naos"
+              src="./images/logo-naos.svg"
+              width="500"
+              height="50"
+              alt="NAOS — экобиология. В сердце дерматологии"
+            />
+          </div>
+
+          <!-- Коллаж из слоёв по координатам из макета, всё декоративное -->
+          <div class="hero__visual">
+            <!-- В макете стоит GIF на 3,6 МБ, видео с той же анимацией весит в 20+ раз меньше -->
+            <video
+              class="hero__family"
+              src="./images/hero/hero-family.mp4"
+              poster="./images/hero/hero-family.webp"
+              autoplay
+              muted
+              loop
+              playsinline
+              aria-hidden="true"
+            ></video>
+            <img class="hero__blur" src="./images/hero/hero-side.webp" alt="" />
+            <video
+              class="hero__liquid"
+              src="./images/hero/hero-liquid.mp4"
+              poster="./images/hero/hero-liquid-poster.webp"
+              autoplay
+              muted
+              loop
+              playsinline
+              aria-hidden="true"
+            ></video>
+
+            <div class="hero__prize-card">
+              <p class="hero__prize-label">Главный приз</p>
+              <p class="hero__prize-value">150 000 ₽</p>
+              <p class="hero__prize-text">
+                Сертификат <br class="br-mobile" />на покупку
+                <br />
+                бьюти-гаджетов
+              </p>
+              <p class="hero__prize-count">3 главных приза</p>
+            </div>
+
+            <img
+              class="hero__packshot"
+              src="./images/hero/atoderm-packshot.webp"
+              width="238"
+              height="704"
+              alt="Бальзам BIODERMA Atoderm Intensive Baume"
+            />
+
+            <!-- Звёздочка у знака расшифрована в подвале -->
+            <img
+              class="hero__recommended"
+              src="./images/logo-recommended.svg"
+              width="260"
+              height="110"
+              alt="Рекомендовано дерматологами"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Как стать участником -->
+      <section class="steps" id="how" aria-labelledby="steps-title">
+        <div class="container steps__container">
+          <div class="steps__intro">
+            <h2 class="section-title section-title--md" id="steps-title">Как стать участником?</h2>
+            <button class="button" type="button" data-popup-open="login">
+              <span class="button__text">Загрузить чек</span>
+              <span class="button__icon" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <!-- Номера шагов рисует CSS-счётчик -->
+          <ol class="steps__list">
+            <li class="steps__item">
+              <h3 class="steps__item-title">Купите</h3>
+              <p class="steps__item-text">2 продукта BIODERMA, один из которых — гаммы ATODERM.</p>
+            </li>
+            <li class="steps__item">
+              <h3 class="steps__item-title">Сохраните чек</h3>
+              <p class="steps__item-text">
+                При покупке используйте карту лояльности «Фармленд» и сохраните чек с QR-кодом.
+              </p>
+            </li>
+            <li class="steps__item">
+              <h3 class="steps__item-title">Загрузите чек</h3>
+              <p class="steps__item-text">
+                Войдите в личный кабинет и загрузите фото чека или его электронную версию.
+              </p>
+            </li>
+            <li class="steps__item">
+              <h3 class="steps__item-title">Участвуйте в розыгрыше</h3>
+              <p class="steps__item-text">Еженедельных и Главных призов</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Призы -->
+      <section class="prizes" id="prizes" aria-labelledby="prizes-title">
+        <div class="container prizes__container">
+          <h2 class="section-title" id="prizes-title">Призы</h2>
+
+          <h3 class="section-subtitle">Еженедельные <span class="nowrap">бьюти-гаджеты</span></h3>
+
+          <!-- Переключатель недель (логика в weekly-prizes.js). По умолчанию открыта текущая неделя акции,
+            без JS — первая. Невыбранные вкладки вне Tab, между ними ходят стрелками -->
+          <div class="weekly" data-weekly>
+            <div class="weekly__photo">
+              <div
+                class="weekly__panel weekly__panel--active"
+                id="week-panel-1"
+                role="tabpanel"
+                aria-labelledby="week-tab-1"
+              >
+                <img
+                  class="weekly__image weekly__image--1"
+                  src="./images/prizes/week-1.webp"
+                  width="760"
+                  height="733"
+                  alt="Силиконовая LED-маска для лица в руках"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                class="weekly__panel"
+                id="week-panel-2"
+                role="tabpanel"
+                aria-labelledby="week-tab-2"
+              >
+                <img
+                  class="weekly__image weekly__image--2"
+                  src="./images/prizes/week-2.webp"
+                  width="800"
+                  height="800"
+                  alt="Аппарат для комплексного лифтинга на подставке"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                class="weekly__panel"
+                id="week-panel-3"
+                role="tabpanel"
+                aria-labelledby="week-tab-3"
+              >
+                <img
+                  class="weekly__image weekly__image--3"
+                  src="./images/prizes/week-3.webp"
+                  width="960"
+                  height="960"
+                  alt="Массажёр для микроигольчатого лифтинга кожи головы и лица"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                class="weekly__panel"
+                id="week-panel-4"
+                role="tabpanel"
+                aria-labelledby="week-tab-4"
+              >
+                <img
+                  class="weekly__image weekly__image--4"
+                  src="./images/prizes/week-4.webp"
+                  width="800"
+                  height="888"
+                  alt="LED-маска для фототерапии лица"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <!-- В <button> блочные теги нельзя, поэтому span -->
+            <div class="weekly__list" role="tablist" aria-label="Еженедельные призы по неделям">
+              <button
+                class="weekly__item weekly__item--active"
+                id="week-tab-1"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="week-panel-1"
+                data-start="2026-11-09"
+                data-end="2026-11-15"
+              >
+                <span class="weekly__meta">
+                  <span>1-я неделя</span>
+                  <span>1 шт.</span>
+                </span>
+                <span class="weekly__name">Силиконовая маска для фотоомоложения лица</span>
+              </button>
+              <button
+                class="weekly__item"
+                id="week-tab-2"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="week-panel-2"
+                tabindex="-1"
+                data-start="2026-11-16"
+                data-end="2026-11-22"
+              >
+                <span class="weekly__meta">
+                  <span>2-я неделя</span>
+                  <span>1 шт.</span>
+                </span>
+                <span class="weekly__name">Система комплексного лифтинга</span>
+              </button>
+              <button
+                class="weekly__item"
+                id="week-tab-3"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="week-panel-3"
+                tabindex="-1"
+                data-start="2026-11-23"
+                data-end="2026-11-29"
+              >
+                <span class="weekly__meta">
+                  <span>3-я неделя</span>
+                  <span>1 шт.</span>
+                </span>
+                <span class="weekly__name">Микроигольчатый лифтинг для кожи головы и лица</span>
+              </button>
+              <button
+                class="weekly__item"
+                id="week-tab-4"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="week-panel-4"
+                tabindex="-1"
+                data-start="2026-11-30"
+                data-end="2026-12-06"
+              >
+                <span class="weekly__meta">
+                  <span>4-я неделя</span>
+                  <span>1 шт.</span>
+                </span>
+                <span class="weekly__name">LED-маска для фототерапии лица</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Те же призы для узких экранов: вместо вкладок слайдер по кругу (weekly-slider.js).
+            Без JS — просто лента, листается вбок -->
+          <div
+            class="weekly-cards"
+            role="region"
+            aria-roledescription="карусель"
+            aria-label="Еженедельные призы по неделям"
+            data-weekly-slider
+          >
+            <ul class="weekly-cards__track" data-weekly-slider-track>
+              <li class="weekly-cards__item">
+                <p class="weekly-cards__meta">
+                  <span>1-я неделя</span>
+                  <span>1 шт.</span>
+                </p>
+                <div class="weekly-cards__photo">
+                  <img
+                    class="weekly__image weekly__image--1"
+                    src="./images/prizes/week-1.webp"
+                    width="760"
+                    height="733"
+                    alt="Силиконовая LED-маска для лица в руках"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="weekly-cards__name">Силиконовая маска для фотоомоложения лица</p>
+              </li>
+              <li class="weekly-cards__item">
+                <p class="weekly-cards__meta">
+                  <span>2-я неделя</span>
+                  <span>1 шт.</span>
+                </p>
+                <div class="weekly-cards__photo">
+                  <img
+                    class="weekly__image weekly__image--2"
+                    src="./images/prizes/week-2.webp"
+                    width="800"
+                    height="800"
+                    alt="Аппарат для комплексного лифтинга на подставке"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="weekly-cards__name">Система комплексного лифтинга</p>
+              </li>
+              <li class="weekly-cards__item">
+                <p class="weekly-cards__meta">
+                  <span>3-я неделя</span>
+                  <span>1 шт.</span>
+                </p>
+                <div class="weekly-cards__photo">
+                  <img
+                    class="weekly__image weekly__image--3"
+                    src="./images/prizes/week-3.webp"
+                    width="960"
+                    height="960"
+                    alt="Массажёр для микроигольчатого лифтинга кожи головы и лица"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="weekly-cards__name">Микроигольчатый лифтинг для кожи головы и лица</p>
+              </li>
+              <li class="weekly-cards__item">
+                <p class="weekly-cards__meta">
+                  <span>4-я неделя</span>
+                  <span>1 шт.</span>
+                </p>
+                <div class="weekly-cards__photo">
+                  <img
+                    class="weekly__image weekly__image--4"
+                    src="./images/prizes/week-4.webp"
+                    width="800"
+                    height="888"
+                    alt="LED-маска для фототерапии лица"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="weekly-cards__name">LED-маска для фототерапии лица</p>
+              </li>
+            </ul>
+          </div>
+
+          <h3 class="section-subtitle">Подарочные наборы и промокоды</h3>
+
+          <ul class="bonus">
+            <li class="bonus__item">
+              <h4 class="bonus__title">Подарочный набор BIODERMA</h4>
+              <img
+                class="bonus__image"
+                src="./images/prizes/gift-set-bag.webp"
+                width="360"
+                height="270"
+                alt="Полосатая косметичка BIODERMA с набором средств ATODERM"
+                loading="lazy"
+              />
+              <p class="bonus__caption">
+                По одному набору каждую неделю<span class="bonus__sep"> ·</span>
+                <br class="br-mobile" />4 всего
+              </p>
+            </li>
+
+            <li class="bonus__item">
+              <h4 class="bonus__title">Промокод 2 000 ₽</h4>
+              <div class="promo-card">
+                <!-- Видео начнёт грузиться, только когда карточка покажется на экране -->
+                <video
+                  class="promo-card__video promo-card__video--mirrored"
+                  src="./images/prizes/promo-2000.mp4"
+                  poster="./images/prizes/promo-2000-poster.webp"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  data-lazy-video
+                  aria-hidden="true"
+                ></video>
+                <img
+                  class="promo-card__logo"
+                  src="./images/logo-farmlend-white.svg"
+                  width="126"
+                  height="40"
+                  alt="farmlend.ru"
+                />
+                <p class="promo-card__value">2 000 ₽</p>
+              </div>
+              <p class="bonus__caption">
+                10 промокодов каждую неделю<span class="bonus__sep"> ·</span>
+                <br class="br-mobile" />40 всего
+              </p>
+            </li>
+
+            <li class="bonus__item">
+              <h4 class="bonus__title">Промокод 4 000 ₽</h4>
+              <div class="promo-card">
+                <video
+                  class="promo-card__video"
+                  src="./images/prizes/promo-4000.mp4"
+                  poster="./images/prizes/promo-4000-poster.webp"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  data-lazy-video
+                  aria-hidden="true"
+                ></video>
+                <img
+                  class="promo-card__logo"
+                  src="./images/logo-farmlend-white.svg"
+                  width="126"
+                  height="40"
+                  alt="farmlend.ru"
+                />
+                <p class="promo-card__value">4 000 ₽</p>
+              </div>
+              <p class="bonus__caption">
+                5 промокодов каждую неделю<span class="bonus__sep"> ·</span>
+                <br class="br-mobile" />20 всего
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Главные призы -->
+      <section class="main-prize" aria-labelledby="main-prize-title">
+        <div class="container main-prize__container">
+          <div class="main-prize__content">
+            <h2 class="section-title" id="main-prize-title">Главные призы</h2>
+            <p class="main-prize__subtitle">
+              Сертификат на покупку
+              <br />
+              бьюти-гаджетов
+            </p>
+            <p class="main-prize__text">3 победителя по итогам акции</p>
+          </div>
+
+          <div class="main-prize__visual">
+            <div class="promo-card promo-card--large">
+              <video
+                class="promo-card__video"
+                src="./images/prizes/main-prize.mp4"
+                poster="./images/prizes/main-prize-poster.webp"
+                muted
+                loop
+                playsinline
+                preload="none"
+                data-lazy-video
+                aria-hidden="true"
+              ></video>
+              <p class="promo-card__value">150 000 ₽</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Победители -->
+      <!-- Два состояния, переключает data-published: "false" — заглушка до розыгрышей,
+        "true" — поиск и таблица. Строки пока демонстрационные.
+        TODO (бэкенд): после первого розыгрыша выставить "true" и выводить реальных победителей -->
+      <section
+        class="winners"
+        id="winners"
+        aria-labelledby="winners-title"
+        data-winners
+        data-published="false"
+      >
+        <div class="container winners__container">
+          <div class="winners__aside">
+            <h2 class="section-title winners__title" id="winners-title">Победители</h2>
+
+            <!-- Поиск появляется вместе с таблицей. Отправлять форму пока некуда, фильтруем на месте -->
+            <form class="winners__search" role="search" data-winners-filter hidden>
+              <div class="form-field winners__search-field">
+                <input
+                  class="form-field__control"
+                  id="winners-search"
+                  type="search"
+                  inputmode="tel"
+                  placeholder=" "
+                  autocomplete="off"
+                  data-winners-search
+                />
+                <label class="form-field__label" for="winners-search"
+                  >Поиск по номеру телефона</label
+                >
+              </div>
+              <button class="button button--xs" type="submit">
+                <span class="button__text">Найти</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- До розыгрышей -->
+          <div class="winners__content" data-winners-empty>
+            <p class="winners__lead">Имена появятся после розыгрышей</p>
+            <p class="winners__text">
+              Победители ещё не объявлены.
+              <br />
+              Возвращайтесь за результатами, а пока зарегистрируйте свой чек.
+            </p>
+            <button class="button" type="button" data-popup-open="login">
+              <span class="button__text">Загрузить чек</span>
+              <span class="button__icon" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <!-- После розыгрышей -->
+          <div class="winners__results" data-winners-results hidden>
+            <div class="data-table data-table--card">
+              <table class="data-table__table">
+                <thead>
+                  <tr>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Приз</th>
+                  </tr>
+                </thead>
+                <!-- TODO (бэкенд): строки победителей. data-phone — открытые цифры номера для поиска,
+                  последние четыре цифры не показываем -->
+                <tbody>
+                  <tr data-winner-row data-phone="7916245">
+                    <td><time datetime="2026-11-24">24.11.2026</time></td>
+                    <td>Алексей Р.</td>
+                    <td>+7 916 245-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 4 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7903118">
+                    <td><time datetime="2026-11-28">28.11.2026</time></td>
+                    <td>Пантелеймон Х.</td>
+                    <td>+7 903 118-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 4 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7925730">
+                    <td><time datetime="2026-11-12">12.11.2026</time></td>
+                    <td>Кристина П.</td>
+                    <td>+7 925 730-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 2 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7985402">
+                    <td><time datetime="2026-11-19">19.11.2026</time></td>
+                    <td>Ольга Ф.</td>
+                    <td>+7 985 402-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 2 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7926377">
+                    <td><time datetime="2026-11-12">12.11.2026</time></td>
+                    <td>Валентина П.</td>
+                    <td>+7 926 377-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 2 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7999888">
+                    <td><time datetime="2026-11-24">24.11.2026</time></td>
+                    <td>Пётр К.</td>
+                    <td>+7 999 888-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 2 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7915604">
+                    <td><time datetime="2026-11-19">19.11.2026</time></td>
+                    <td>Наталья У.</td>
+                    <td>+7 915 604-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 2 000 ₽</td>
+                  </tr>
+                  <tr data-winner-row data-phone="7977213">
+                    <td><time datetime="2026-11-28">28.11.2026</time></td>
+                    <td>Криштиану Р.</td>
+                    <td>+7 977 213-ХХ-ХХ</td>
+                    <td class="data-table__accent">Промокод 4 000 ₽</td>
+                  </tr>
+                  <tr data-winners-nothing hidden>
+                    <td class="data-table__message" colspan="4">Ничего не найдено</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="visually-hidden" role="status" data-winners-count></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Помощь -->
+      <!-- id не "faq": под этим именем в шаблоне President живёт окно со своими стилями! -->
+      <section class="help" id="help" aria-labelledby="help-title">
+        <div class="container help__container">
+          <h2 class="section-title" id="help-title">Помощь</h2>
+
+          <div class="help__columns">
+            <div class="help__faq">
+              <h3 class="section-subtitle section-subtitle--tight">Частые вопросы</h3>
+
+              <div class="accordion">
+                <details class="accordion__item" name="faq" open>
+                  <summary class="accordion__question">Где проводится акция?</summary>
+                  <div class="accordion__answer">
+                    <p>
+                      Акция проводится в розничных аптеках сети «Фармленд» на территории Российской
+                      Федерации, а также при бронировании или покупке (на условиях доставки) в
+                      интернет-аптеке и других цифровых ресурсах сети «Фармленд» на территории РФ.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Какие продукты BIODERMA участвуют в акции?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>В Акции участвует вся продукция торговой марки BIODERMA.</p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">Какие сроки проведения акции?</summary>
+                  <div class="accordion__answer">
+                    <ul>
+                      <li>общий срок акции: с 9 ноября по 20 декабря 2026 года включительно;</li>
+                      <li>
+                        покупка продукции и регистрация чеков: с 9 ноября по 6 декабря 2026 года
+                        включительно;
+                      </li>
+                      <li>
+                        подведение итогов по неделям: 17 ноября, 24 ноября, 1 декабря и 8 декабря
+                        2026 года;
+                      </li>
+                      <li>подведение итогов главного розыгрыша: 9 декабря 2026 года;</li>
+                      <li>выдача призов: до 20 декабря 2026 года включительно.</li>
+                    </ul>
+                    <p>Все сроки указаны по московскому времени.</p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Что нужно сделать, чтобы принять участие?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>Чтобы принять участие в акции:</p>
+                    <ul>
+                      <li>
+                        быть старше 18 лет, постоянно проживать на территории Российской Федерации и
+                        быть участником программы лояльности «Фармленд»;
+                      </li>
+                      <li>
+                        с 9 ноября по 6 декабря 2026 года купить 2 товара BIODERMA, минимум один из
+                        которых — из гаммы ATODERM;
+                      </li>
+                      <li>
+                        при покупке идентифицироваться в программе лояльности «Фармленд», чтобы
+                        покупка была учтена в вашем аккаунте;
+                      </li>
+                      <li>получить и сохранить кассовый чек с QR-кодом до окончания акции;</li>
+                      <li>
+                        зарегистрироваться по номеру телефона на промо-сайте акции:
+                        bioderma.farmlend.ru;
+                      </li>
+                      <li>загрузить / зарегистрировать чек с QR-кодом на промо-сайте;</li>
+                      <li>дождаться успешной проверки чека.</li>
+                    </ul>
+                    <p>
+                      Каждый успешно проверенный чек даёт отдельное участие в розыгрыше
+                      соответствующей недели.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Какие требования предъявляются к чеку?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>Чек должен:</p>
+                    <ul>
+                      <li>
+                        подтверждать покупку в сети «Фармленд» в период с 9 ноября по 6 декабря 2026
+                        года;
+                      </li>
+                      <li>
+                        содержать 2 товара BIODERMA, минимум один из которых — из гаммы ATODERM;
+                      </li>
+                      <li>содержать QR-код;</li>
+                      <li>быть связан с участником через программу лояльности «Фармленд»;</li>
+                      <li>
+                        успешно пройти техническую проверку и проверку соответствия условиям акции.
+                      </li>
+                    </ul>
+                    <p>Если чек не прошёл проверку, он не даёт право на участие в розыгрыше.</p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Сколько чеков можно зарегистрировать?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>
+                      Повторные покупки допускаются. Каждый новый успешно проверенный чек,
+                      соответствующий условиям акции, даёт отдельное участие в еженедельном
+                      розыгрыше. Все успешно проверенные чеки за весь период акции участвуют также в
+                      розыгрыше главных призов.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">Какие призы можно получить?</summary>
+                  <div class="accordion__answer">
+                    <p>Каждую неделю разыгрываются:</p>
+                    <ul>
+                      <li>
+                        1 бьюти-гаджет: по неделям — силиконовая маска для фотоомоложения лица,
+                        система комплексного лифтинга, лифтинг-уход с эффектом микроигл для кожи
+                        головы и лица или LED-маска для фототерапии лица;
+                      </li>
+                      <li>1 подарочный набор BIODERMA;</li>
+                      <li>10 промокодов аптечной сети «Фармленд» номиналом 2 000 ₽;</li>
+                      <li>5 промокодов аптечной сети «Фармленд» номиналом 4 000 ₽.</li>
+                    </ul>
+                    <p>
+                      За четыре недели всего разыгрываются 4 бьюти-гаджета, 4 набора BIODERMA, 40
+                      промокодов по 2 000 ₽ и 20 промокодов по 4 000 ₽.
+                    </p>
+                    <p>Главные призы:</p>
+                    <ul>
+                      <li>
+                        3 подарочных сертификата на покупку бьюти-гаджетов номиналом 150 000 ₽
+                        каждый.
+                      </li>
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Сколько призов может выиграть один участник?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>За весь период акции один участник может выиграть:</p>
+                    <ul>
+                      <li>не более 1 еженедельного приза по итогам каждой из четырёх недель;</li>
+                      <li>не более 1 главного приза.</li>
+                    </ul>
+                    <p>
+                      То есть один участник может стать победителем в разных недельных периодах и
+                      отдельно в главном розыгрыше.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">Как определяются победители?</summary>
+                  <div class="accordion__answer">
+                    <p>
+                      В розыгрыши попадают только участия, которые соответствуют условиям акции.
+                      Каждой записи присваивается порядковый номер по времени покупки.
+                    </p>
+                    <p>
+                      Победители определяются по формуле, указанной в Правилах акции. В расчёте
+                      используются количество допущенных участий, номер разыгрываемого приза и
+                      дробная часть официального курса соответствующей валюты Банка России на дату
+                      подведения итогов.
+                    </p>
+                    <p>
+                      Еженедельный розыгрыш проводится отдельно по каждой неделе. В главном
+                      розыгрыше участвуют все допущенные участия за период с 9 ноября по 6 декабря
+                      2026 года.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Как я узнаю о выигрыше и как получить приз?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>
+                      Результаты розыгрышей публикуются на промо-странице акции. Организатор также
+                      связывается с победителями по имеющимся контактным данным в течение 5 рабочих
+                      дней после подведения итогов.
+                    </p>
+                    <p>Способ получения зависит от вида приза:</p>
+                    <ul>
+                      <li>
+                        промокоды «Фармленд» номиналом 2 000 ₽ и 4 000 ₽ размещаются в личном
+                        кабинете победителя в программе лояльности «Фармленд» не позднее 20 декабря
+                        2026 года;
+                      </li>
+                      <li>
+                        вещественные еженедельные призы выдаются в офисе Организатора или
+                        доставляются курьерской / почтовой службой;
+                      </li>
+                      <li>
+                        главные призы выдаются в офисе Организатора или доставляются по адресу,
+                        полученному от победителя.
+                      </li>
+                    </ul>
+                    <p>
+                      Для получения вещественного или главного приза победителю необходимо в течение
+                      3 календарных дней после уведомления предоставить Организатору данные и
+                      документы, предусмотренные Правилами акции: ФИО, почтовый адрес, контактные
+                      телефоны, паспортные данные, ИНН, а при запросе — копию или оригинал
+                      выигрышного чека.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="accordion__item" name="faq">
+                  <summary class="accordion__question">
+                    Куда обратиться, если возник вопрос по акции?
+                  </summary>
+                  <div class="accordion__answer">
+                    <p>
+                      Вопросы по акции можно направить на адрес:
+                      <a href="mailto:info@bioderma.farmlend.ru">info@bioderma.farmlend.ru</a>
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <!-- Форма обратной связи -->
+            <div class="help__feedback">
+              <h3 class="section-subtitle section-subtitle--tight">Если не нашлось ответа</h3>
+
+              <div class="feedback">
+                <p class="feedback__lead">
+                  Отправьте нам сообщение
+                  <br />
+                  и мы обязательно ответим!
+                </p>
+
+                <!-- Проверку вешаем на feedback-form.js, ошибки подсвечивает CSS.
+                  TODO: action — адрес обработчика на сервере -->
+                <form class="feedback__form" action="#" method="post" novalidate data-feedback-form>
+                  <div class="form-field">
+                    <input
+                      class="form-field__control"
+                      id="feedback-name"
+                      name="name"
+                      type="text"
+                      placeholder=" "
+                      autocomplete="name"
+                      required
+                    />
+                    <label class="form-field__label" for="feedback-name">Имя</label>
+                  </div>
+
+                  <div class="form-field">
+                    <input
+                      class="form-field__control"
+                      id="feedback-email"
+                      name="email"
+                      type="email"
+                      placeholder=" "
+                      autocomplete="email"
+                      required
+                    />
+                    <label class="form-field__label" for="feedback-email">Email</label>
+                  </div>
+
+                  <div class="form-field form-field--select">
+                    <!-- Пустой скрытый пункт: пока тема не выбрана, видна только подпись -->
+                    <select class="form-field__control" id="feedback-topic" name="topic" required>
+                      <option value="" disabled selected hidden></option>
+                      <option value="conditions">Условия участия</option>
+                      <option value="receipt">Регистрация чека</option>
+                      <option value="prizes">Призы и розыгрыши</option>
+                      <option value="other">Другое</option>
+                    </select>
+                    <label class="form-field__label" for="feedback-topic">Выберите тему</label>
+                  </div>
+
+                  <div class="form-field">
+                    <textarea
+                      class="form-field__control form-field__control--textarea"
+                      id="feedback-message"
+                      name="message"
+                      placeholder=" "
+                      required
+                    ></textarea>
+                    <label class="form-field__label" for="feedback-message">Текст сообщения</label>
+                  </div>
+
+                  <button class="button button--form" type="submit">
+                    <span class="button__text">Отправить</span>
+                    <span class="button__icon" aria-hidden="true"></span>
+                  </button>
+
+                  <!-- Сюда пишется результат отправки -->
+                  <p class="feedback__status" role="status" data-feedback-status></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+      <div class="footer__info">
+        <div class="footer__legal">
+          <p>
+            Сроки проведения Акции, включая сроки выдачи призов с 09 ноября по 20 декабря 2026г.
+          </p>
+          <p>
+            Условие участия — быть зарегистрированным пользователем системы лояльности сети
+            «Фармленд»
+          </p>
+        </div>
+
+        <p class="footer__phone">
+          Телефон горячей линии:
+          <a class="footer__phone-link" href="tel:+78005500393">8 800 550-03-93</a>
+        </p>
+
+        <ul class="footer__docs">
+          <li>
+            <!-- TODO: тут будет ссылки на документы, когда их пришлют -->
+            <a class="footer__link" href="#rules" id="rules">Полные правила акции</a>
+          </li>
+          <li>
+            <a class="footer__link" href="#privacy">Политика конфиденциальности</a>
+          </li>
+        </ul>
+      </div>
+
+      <p class="footer__note">
+        *Продукция Bioderma рекомендована дерматологами для сопровождения терапии различных кожных
+        заболеваний и / или базового ухода за кожей по результатам исследования «2025 Brand Equity
+        Bioderma», проведенного в июле – сентябре 2025 г. ООО «Ипсос Комкон» среди 300 дерматологов
+        в крупных городах 8 ФО России.
+      </p>
+
+      <img
+        class="footer__logo"
+        src="./images/logo-bioderma-footer.svg?v=2"
+        width="1448"
+        height="288"
+        alt=""
+        loading="lazy"
+      />
+    </footer>
+
+    <!-- Встроенные onsubmit — места под настоящую отправку, пока они просто листают окна -->
+    <div class="backdrop" data-backdrop>
+      <div class="popup" data-popup>
+        <!-- Вход / регистрация. Пароля нет: вход и регистрация по телефону, номер подтверждают
+          кодом из звонка. В каждой вкладке два шага — номер и код, их переключает switchAuthStep -->
+        <div
+          class="popup-content"
+          id="login"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Вход и регистрация"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <script>
+            // Прячем один шаг, показываем другой. Высоту вкладки шаблон держит в style,
+            // поэтому пересчитываем её под новый шаг
+            function switchAuthStep(fromId, toId) {
+              const from = document.getElementById(fromId)
+              const to = document.getElementById(toId)
+              const tab = to.closest('[data-tab]')
+              from.hidden = true
+              to.hidden = false
+              tab.style.height = 'auto'
+              tab.style.height = tab.scrollHeight + 'px'
+              to.querySelector('input')?.focus()
+            }
+
+            // TODO (бэкенд): запросить звонок с кодом на введённый номер
+            function onLoginPhoneSubmit(e) {
+              e.preventDefault()
+              switchAuthStep('login-phone', 'login-code')
+            }
+
+            // TODO (бэкенд): проверить код. Пока просто переходим в кабинет
+            function onLoginCodeSubmit(e) {
+              e.preventDefault()
+              window.location.href = './lk.html'
+            }
+
+            // TODO (бэкенд): создать участника и запросить звонок с кодом
+            function onRegisterFormSubmit(e) {
+              e.preventDefault()
+              switchAuthStep('register-form', 'register-code')
+            }
+
+            // TODO (бэкенд): проверить код. После регистрации сразу в кабинет
+            function onRegisterCodeSubmit(e) {
+              e.preventDefault()
+              window.location.href = './lk.html'
+            }
+          </script>
+          <div class="tabs" data-tabs>
+            <ul class="tabs-navigation">
+              <li>
+                <button type="button" data-tab-target="1"><span>Вход</span></button>
+              </li>
+              <li>
+                <button type="button" data-tab-target="2"><span>Регистрация</span></button>
+              </li>
+            </ul>
+
+            <div class="tab" data-tab="1">
+              <form
+                action="#"
+                class="form"
+                id="login-phone"
+                novalidate
+                onsubmit="onLoginPhoneSubmit(event)"
+              >
+                <label class="label">
+                  <span class="label__text">Телефон</span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    class="input"
+                    placeholder="Номер телефона"
+                    autocomplete="off"
+                    required
+                  />
+                </label>
+                <label class="label">
+                  <input type="checkbox" name="remember" class="checkbox" />
+                  <span class="label__text"
+                    ><span class="label__content">Запомнить меня</span></span
+                  >
+                </label>
+                <button type="submit" class="button full">
+                  <span class="button__text">Войти</span>
+                  <span class="button__icon" aria-hidden="true"></span>
+                </button>
+              </form>
+
+              <form
+                action="#"
+                class="form"
+                id="login-code"
+                novalidate
+                hidden
+                onsubmit="onLoginCodeSubmit(event)"
+              >
+                <label class="label">
+                  <span class="label__text">Код подтверждения</span>
+                  <input
+                    type="text"
+                    name="code"
+                    class="input"
+                    placeholder="Код подтверждения"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    required
+                  />
+                </label>
+                <button type="submit" class="button full">
+                  <span class="button__text">Войти</span>
+                  <span class="button__icon" aria-hidden="true"></span>
+                </button>
+                <div class="popup-note">
+                  <p>Тебе поступит звонок с&nbsp;кодом подтверждения.</p>
+                  <p>
+                    Если не&nbsp;хочешь ждать или звонок не&nbsp;поступил, позвони по&nbsp;номеру
+                    и&nbsp;вход подтвердится автоматически
+                  </p>
+                  <!-- TODO (бэкенд): номер для обратного звонка -->
+                  <a class="popup-note__phone" href="tel:+78008888888">8 800 888 88 88</a>
+                </div>
+                <button
+                  type="button"
+                  class="link link--back"
+                  onclick="switchAuthStep('login-code', 'login-phone')"
+                >
+                  Назад
+                </button>
+              </form>
+            </div>
+
+            <div class="tab" data-tab="2">
+              <form
+                action="#"
+                class="form"
+                id="register-form"
+                novalidate
+                onsubmit="onRegisterFormSubmit(event)"
+              >
+                <label class="label">
+                  <span class="label__text">Имя</span>
+                  <input
+                    type="text"
+                    name="name"
+                    class="input"
+                    placeholder="Имя"
+                    autocomplete="given-name"
+                    required
+                  />
+                </label>
+                <label class="label">
+                  <span class="label__text">E-mail</span>
+                  <input
+                    type="email"
+                    name="email"
+                    class="input"
+                    placeholder="Email"
+                    autocomplete="email"
+                    required
+                  />
+                </label>
+                <label class="label">
+                  <span class="label__text">Телефон</span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    class="input"
+                    placeholder="+7 999 888-66-77"
+                    autocomplete="off"
+                    required
+                  />
+                </label>
+                <p class="popup-note popup-note--left">
+                  На&nbsp;твой номер телефона поступит звонок с&nbsp;голосовым сообщением кода для
+                  подтверждения регистрации.
+                </p>
+                <fieldset>
+                  <legend class="visually-hidden">Согласия</legend>
+                  <label class="label">
+                    <input type="checkbox" name="agree" class="checkbox" required />
+                    <!-- TODO: ссылки на PDF правил и политики конфиденциальности -->
+                    <span class="label__text">
+                      <span class="label__content">
+                        Я соглашаюсь с&nbsp;<a href="#rules" class="link">Правилами</a> и&nbsp;<a
+                          href="#privacy"
+                          class="link"
+                          >Политикой конфиденциальности</a
+                        >
+                      </span>
+                    </span>
+                  </label>
+                  <label class="label">
+                    <input type="checkbox" name="personal_data" class="checkbox" required />
+                    <!-- TODO: ссылка на политику обработки ПД -->
+                    <span class="label__text">
+                      <span class="label__content">
+                        Я соглашаюсь с&nbsp;<a href="#privacy" class="link"
+                          >Политикой обработки персональных данных</a
+                        >
+                      </span>
+                    </span>
+                  </label>
+                </fieldset>
+                <button type="submit" class="button full">
+                  <span class="button__text">Зарегистрироваться</span>
+                  <span class="button__icon" aria-hidden="true"></span>
+                </button>
+              </form>
+
+              <form
+                action="#"
+                class="form"
+                id="register-code"
+                novalidate
+                hidden
+                onsubmit="onRegisterCodeSubmit(event)"
+              >
+                <label class="label">
+                  <span class="label__text">Код подтверждения</span>
+                  <input
+                    type="text"
+                    name="code"
+                    class="input"
+                    placeholder="Код подтверждения"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    required
+                  />
+                </label>
+                <button type="submit" class="button full">
+                  <span class="button__text">Зарегистрироваться</span>
+                  <span class="button__icon" aria-hidden="true"></span>
+                </button>
+                <div class="popup-note">
+                  <p>Тебе поступит звонок с&nbsp;кодом подтверждения.</p>
+                  <p>
+                    Если не&nbsp;хочешь ждать или звонок не&nbsp;поступил, позвони по&nbsp;номеру
+                    и&nbsp;регистрация подтвердится автоматически
+                  </p>
+                  <!-- TODO (бэкенд): номер для обратного звонка -->
+                  <a class="popup-note__phone" href="tel:+78008888888">8 800 888 88 88</a>
+                </div>
+                <button
+                  type="button"
+                  class="link link--back"
+                  onclick="switchAuthStep('register-code', 'register-form')"
+                >
+                  Назад
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Сообщение из «Помощи» отправлено -->
+        <div
+          class="popup-content"
+          id="feedback-success"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="feedback-success-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="feedback-success-title">Обратная связь</h2>
+            <p class="success-text">
+              <strong>Спасибо!</strong>
+              Твоё сообщение отправлено, мы&nbsp;ответим на&nbsp;указанный e-mail
+            </p>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-close>
+                <span class="button__text">Закрыть</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

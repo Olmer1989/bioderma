@@ -1,0 +1,75 @@
+// Таблица: «Мои чеки» в кабинете и «Победители» на главной.
+// Шапка на сером, строки делят тонкие линии
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.data-table
+  overflow-x: auto
+  background-color: $color-white
+
+  &__table
+    width: 100%
+    border-collapse: collapse
+    text-align: left
+    // Колонки одинаковой ширины, как в макете
+    table-layout: fixed
+
+    th,
+    td
+      padding: 20px 26px
+      color: $color-primary-dark
+      white-space: nowrap
+
+    th
+      padding-block: 19px
+      background-color: $color-table-head
+      font-size: 14px
+      font-weight: $font-book
+      line-height: 20.3px
+
+    td
+      border-top: 1px solid $color-table-border
+      font-size: 15px
+      font-weight: $font-book
+      line-height: 21.75px
+
+  // Синяя колонка — приз у победителей
+  &__table &__accent
+    font-size: 14px
+    color: $color-primary
+
+  &__message
+    font-size: 15px
+    color: $color-text-muted
+    text-align: center
+
+  // Отдельная скруглённая карточка, у первой колонки отступ побольше
+  &--card
+    border-radius: $radius-xl
+
+    th:first-child,
+    td:first-child
+      padding-left: 40px
+
+  // Телефон: шрифт мельче, текст переносится, все колонки помещаются без прокрутки
+  @include media(tablet-sm)
+    &__table
+      th,
+      td
+        padding: 12px 8px
+        font-size: 12px
+        line-height: 1.4
+        white-space: normal
+        // Длинное имя в узкой колонке переносим по слогам
+        hyphens: auto
+
+    &__table &__accent
+      font-size: 12px
+
+    &--card
+      border-radius: $radius-header-mobile
+
+      th:first-child,
+      td:first-child
+        padding-left: 16px

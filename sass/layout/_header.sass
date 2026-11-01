@@ -1,0 +1,178 @@
+// Шапка, липнет к верху при прокрутке
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.header
+  position: sticky
+  top: 0
+  z-index: 100
+  background-color: $color-white
+  border-bottom: 1px solid $color-border
+  border-radius: 0 0 $radius-xl $radius-xl
+
+  // Свой контейнер: поля у шапки 40px, а не 80
+  &__container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 32px
+    max-width: $container-width
+    height: $header-height
+    margin-inline: auto
+    padding-inline: $header-padding
+
+  &__brand
+    display: flex
+    flex-shrink: 0
+    gap: 32px
+
+  &__nav
+    margin-left: auto
+
+  &__menu
+    display: flex
+    align-items: center
+    gap: 32px
+
+  &__menu-link
+    font-size: 16px
+    white-space: nowrap
+    transition: color $transition-fast
+
+    &:hover
+      color: $color-link-hover
+
+  // Мы уже в кабинете — кнопка подсвечена голубым
+  .button--outline[aria-current="page"]:not(:hover, :focus-visible)
+    border-color: $color-link-active
+    color: $color-link-active
+
+  // «Личный кабинет» внутри меню нужен только в мобильном меню.
+  // Селектор с родителем — иначе .button из компонентов (подключён позже) его перебивает
+  &__nav &__menu-cta
+    display: none
+
+  &__burger
+    @include button-reset
+    display: none
+    align-items: center
+    justify-content: center
+    flex-shrink: 0
+    width: 48px
+    height: 48px
+    border-radius: 50%
+    color: $color-primary-dark
+
+  // Две полоски, в открытом меню складываются в крестик
+  &__burger-icon
+    position: relative
+    width: 24px
+    height: 24px
+
+    &::before,
+    &::after
+      content: ""
+      position: absolute
+      left: 0
+      width: 24px
+      height: 2px
+      background-color: currentColor
+      transition: top $transition-base, rotate $transition-base
+
+    &::before
+      top: 7px
+
+    &::after
+      top: 15px
+
+  &--menu-open &__burger-icon
+    &::before,
+    &::after
+      top: 11px
+
+    &::before
+      rotate: 45deg
+
+    &::after
+      rotate: -45deg
+
+  // Меню прячется в бургер. Плашка шапки — у контейнера, чтобы меню уходило под неё
+  @include media(laptop)
+    background-color: transparent
+    border-bottom: none
+
+    &__container
+      background-color: $color-white
+      border-bottom: 1px solid $color-border
+      border-radius: inherit
+
+    > .header__container > .button
+      margin-left: auto
+
+    &__burger
+      display: flex
+
+    // z-index: -1 — меню ложится под белую плашку шапки, но поверх страницы
+    &__nav
+      position: fixed
+      inset: 0
+      z-index: -1
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      gap: 64px
+      padding: $header-height $container-padding-mobile 40px
+      overflow-y: auto
+      background-color: $color-bg-light
+      opacity: 0
+      visibility: hidden
+      transition: opacity $transition-base, visibility $transition-base
+
+    &--menu-open &__nav
+      opacity: 1
+      visibility: visible
+
+    &__menu
+      flex-direction: column
+      gap: 40px
+
+    &__menu-link
+      font-size: 20px
+
+    // В мобильном макете перед кнопкой пустое место под шестой пункт — 104px от последнего
+    &__nav &__menu-cta
+      display: inline-flex
+      margin-top: 40px
+
+  // На телефоне шапка ниже, логотипы меньше, «Личный кабинет» уезжает в меню
+  @include media(tablet-sm)
+    border-radius: 0 0 $radius-header-mobile $radius-header-mobile
+
+    &__container
+      gap: 16px
+      height: $header-height-mobile
+      padding-inline: $header-padding-mobile
+
+    > .header__container > .button
+      display: none
+
+    &__brand
+      gap: 21px
+
+    &__logo
+      width: auto
+      height: 26px
+
+    &__nav
+      padding-top: $header-height-mobile
+
+  // Уже 375 (320 и т. п.): иначе логотипы выталкивают бургер за край
+  @include media(mobile-sm)
+    &__container
+      gap: 8px
+      padding-inline: 16px
+
+    &__brand
+      gap: 16px

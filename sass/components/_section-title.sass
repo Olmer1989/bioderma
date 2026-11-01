@@ -1,0 +1,34 @@
+// Заголовки секций
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.section-title
+  font-size: 62px
+  font-weight: $font-light
+  line-height: 1.15
+
+  &--md
+    font-size: 48px
+
+  // Телефон: в мобильном макете заголовки разделов 48px («Главные призы» и «Победители» — 40px, у себя)
+  @include media(tablet-sm)
+    font-size: 48px
+
+
+.section-subtitle
+  font-size: 32px
+  font-weight: $font-light
+  line-height: 1.6
+
+  &--tight
+    line-height: 1.1
+
+  @include media(tablet)
+    font-size: 26px
+
+  @include media(tablet-sm)
+    line-height: 1.2
+
+    &--tight
+      line-height: 1.1

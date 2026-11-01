@@ -1,0 +1,17 @@
+{
+  "name": "bioderma-farmlend-promo",
+  "private": true,
+  "description": "Промо-сайт акции BIODERMA × Фармленд: лендинг и личный кабинет",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build:css": "node scripts/build-css.js",
+    "watch:css": "node scripts/build-css.js --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.6.2",
+    "postcss": "^8.5.32",
+    "sass": "^1.107.0"
+  }
+}

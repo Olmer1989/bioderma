@@ -1,0 +1,78 @@
+// Аккордеон на <details>: открывает и закрывает сам браузер, плюс при открытии
+// поворачивается в крестик
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.accordion
+  interpolate-size: allow-keywords
+
+  &__item
+    border-bottom: 1px solid $color-border
+
+    // Плавное раскрытие — только там, где браузер умеет анимировать до height: auto.
+    @supports (interpolate-size: allow-keywords)
+      &::details-content
+        height: 0
+        overflow: hidden
+        transition: height $transition-base, content-visibility $transition-base allow-discrete
+
+      &[open]::details-content
+        height: auto
+
+  &__question
+    display: flex
+    align-items: flex-start
+    justify-content: space-between
+    gap: 16px
+    padding: 16px
+    font-size: 20px
+    font-weight: $font-light
+    line-height: 1.2
+    color: $color-primary-dark
+    cursor: pointer
+    // Прячем родной треугольник у summary…
+    list-style: none
+
+    // …и его сафари-версию
+    &::-webkit-details-marker
+      display: none
+
+    &::after
+      content: ""
+      @include icon-mask("../images/icons/plus.svg", 24px)
+      transition: transform $transition-base
+
+    &:hover
+      color: $color-primary
+
+  &__item[open] &__question::after
+    transform: rotate(45deg)
+
+  &__answer
+    padding: 0 16px 16px
+    font-size: 16px
+    font-weight: $font-light
+    line-height: 1.4
+    color: $color-text-faq
+
+    // В ответах из FAQ заказчика по несколько абзацев и списки — разводим их
+    > *
+      margin: 0
+
+    > * + *
+      margin-top: 8px
+
+    ul
+      padding-left: 24px
+
+    li + li
+      margin-top: 4px
+
+    a
+      text-decoration: underline
+      white-space: nowrap
+
+  // Телефон: линии выходят за поля раздела на 12px, текст внутри — с отступом 16px
+  @include media(tablet-sm)
+    margin-inline: -12px

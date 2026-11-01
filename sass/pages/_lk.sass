@@ -1,0 +1,174 @@
+// Личный кабинет по макету: слева профиль, справа чеки, ниже призы
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+
+.lk
+  &__container
+    padding-top: 50px
+    padding-bottom: 80px
+
+  &__title
+    text-align: center
+
+  &__columns
+    display: flex
+    align-items: flex-start
+    gap: 100px
+    margin-top: 50px
+
+  // «Александр Смирнов» и «Мои чеки» — одного размера
+  &__heading
+    font-size: 29px
+    font-weight: $font-light
+    line-height: 37.5px
+    letter-spacing: -0.3px
+    color: $color-heading-dark
+
+  @include media(laptop)
+    &__columns
+      flex-direction: column
+      gap: 56px
+
+  // Телефон: заголовок мельче и слева, отступы из мобильного макета
+  @include media(tablet-sm)
+    &__container
+      padding-top: 29px
+      padding-bottom: 55px
+
+    &__title
+      font-size: 32px
+      line-height: 1.1
+      text-align: left
+
+    &__columns
+      gap: 55px
+      margin-top: 29px
+
+
+// Профиль
+.lk-profile
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  flex-shrink: 0
+  width: 340px
+
+  &__data
+    display: flex
+    flex-direction: column
+    gap: 24px
+    margin-block: 28px 32px
+
+  &__field
+    display: flex
+    flex-direction: column
+    gap: 8px
+
+  &__label
+    font-size: 14px
+    color: $color-label
+
+  &__value
+    margin: 0
+    font-size: 18px
+    color: $color-value
+    // Длинный e-mail не должен распирать колонку
+    overflow-wrap: anywhere
+
+  @include media(laptop)
+    width: 100%
+
+  // Телефон: имя мельче, чем «Мои чеки», — так в мобильном макете
+  @include media(tablet-sm)
+    .lk__heading
+      font-size: 24px
+
+    &__data
+      margin-top: 20px
+
+    &__field
+      gap: 10px
+
+    &__label
+      font-size: 12px
+
+    &__value
+      font-size: 16px
+
+
+// Мои чеки
+.lk-cheques
+  display: flex
+  flex-direction: column
+  gap: 26px
+  flex-grow: 1
+  // Даём колонке ужиматься, таблица прокрутится внутри себя
+  min-width: 0
+
+  @include media(laptop)
+    width: 100%
+
+  // Телефон: в макете таблица на 4px шире полей, просторная и без скруглений.
+  // Ширина колонок по содержимому, иначе «На проверке» не помещается
+  @include media(tablet-sm)
+    width: calc(100% + 8px)
+    margin-inline: -4px
+
+    .data-table--card
+      border-radius: 0
+
+    .data-table__table
+      table-layout: auto
+
+      // Слева поле 26px, как в макете, справа почти без поля — иначе колонки не помещаются
+      th,
+      td
+        padding: 20px 4px 20px 26px
+        font-size: 13px
+        line-height: 21.8px
+
+      th
+        padding-block: 19px
+        font-size: 14px
+        line-height: 20.3px
+
+      th:first-child,
+      td:first-child
+        padding-left: 20px
+
+      // Ширины колонок из макета: 101, 90 и 143 из 334
+      th:nth-child(1)
+        width: 30%
+
+      th:nth-child(2)
+        width: 27%
+
+    .status
+      font-size: 13px
+
+  // Уже 375 таблица с полями 26px на пиксель не помещается
+  @include media(mobile-sm)
+    .data-table__table :is(th, td):not(:first-child)
+      padding-left: 16px
+
+
+// Мои призы
+.lk-prizes
+  background-color: $color-bg-light
+
+  &__container
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 26px
+    padding-block: 80px
+
+  .bonus
+    width: 100%
+    max-width: 970px
+
+  @include media(tablet-sm)
+    &__container
+      padding-block: 40px

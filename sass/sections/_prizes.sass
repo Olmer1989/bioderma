@@ -1,0 +1,286 @@
+// Призы: переключатель недель и карточки наборов с промокодами
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.prizes
+  background-color: $color-bg-light
+
+  &__container
+    display: flex
+    flex-direction: column
+    gap: 32px
+    padding-block: 88px
+
+  // Телефон: заголовки по центру, как в мобильном макете
+  @include media(tablet-sm)
+    &__container
+      padding-block: 60px
+      padding-inline: $container-padding-prizes-mobile
+
+    .section-title,
+    .section-subtitle
+      text-align: center
+
+    .section-subtitle
+      font-size: 28px
+
+    .bonus__title
+      font-size: 20px
+
+    // На главной подпись в две строки: «10 промокодов каждую неделю» и «40 всего»
+    .bonus__caption
+      font-size: 16px
+      font-weight: $font-book
+
+    .bonus__sep
+      display: none
+
+
+// Еженедельные гаджеты
+.weekly
+  display: flex
+  margin-bottom: 32px
+
+  &__photo
+    position: relative
+    overflow: hidden
+    flex-shrink: 0
+    width: 400px
+    min-height: 444px
+    border-radius: $radius-xl 0 0 $radius-xl
+    background-color: $color-white
+
+  // Все четыре фото лежат стопкой, видно одно. opacity с visibility вместо display —
+  // чтобы смена шла плавно, а скрытые фото не читал скринридер
+  &__panel
+    position: absolute
+    inset: 0
+    opacity: 0
+    visibility: hidden
+    transition: opacity $transition-slow, visibility $transition-slow
+
+    &--active
+      opacity: 1
+      visibility: visible
+
+  // У каждого фото своя кадровка из макета
+  &__image
+    position: absolute
+    max-width: none
+
+    &--1
+      top: 18.47%
+      left: 14.26%
+      width: 93.68%
+      height: auto
+
+    &--2
+      inset: 0
+      width: 100%
+      height: 100%
+      object-fit: contain
+
+    &--3
+      top: -6.53%
+      left: -8.17%
+      width: 118.24%
+      height: auto
+
+    &--4
+      inset: 0
+      width: 100%
+      height: 100%
+      object-fit: cover
+
+  &__list
+    display: flex
+    flex-direction: column
+    flex-grow: 1
+    overflow: hidden
+    border-radius: 0 $radius-xl $radius-xl 0
+
+  &__item
+    @include button-reset
+    // Четыре недели делят высоту поровну и в сумме равны фото
+    flex: 1
+    display: flex
+    flex-direction: column
+    justify-content: center
+    gap: 12px
+    width: 100%
+    padding: 26px 60px
+    font-weight: $font-light
+    color: $color-primary
+    text-align: left
+    transition: background-color $transition-base
+
+    & + &
+      border-top: 1px solid $color-border
+
+    &:hover
+      background-color: rgba($color-white, 0.6)
+
+    // Рамку фокуса загоняю внутрь, иначе overflow обрежет
+    &:focus-visible
+      outline-offset: -4px
+
+    &--active,
+    &--active:hover
+      background-color: $color-white
+
+  &__meta
+    display: flex
+    justify-content: space-between
+    font-size: 12px
+    text-transform: uppercase
+
+  &__name
+    font-size: 26px
+    line-height: 1.25
+
+  // На узких экранах вкладок нет — вместо них лента .weekly-cards
+  @include media(tablet)
+    display: none
+
+
+// Лента карточек недель для узких экранов: в макете карточки 320px.
+// Без JS листается вбок, со скриптом (--slider) — слайдер по кругу
+.weekly-cards
+  display: none
+
+  // Лента уходит за правый край экрана, а слева обрезана ровно по полю контейнера —
+  // предыдущая карточка не выглядывает
+  @include media(tablet)
+    display: block
+    margin-right: -$container-padding-tablet
+    padding-right: $container-padding-tablet
+    overflow-x: auto
+    scroll-snap-type: x mandatory
+    scrollbar-width: none
+
+  @include media(tablet-sm)
+    margin-right: -$container-padding-prizes-mobile
+    padding-right: $container-padding-prizes-mobile
+
+  // Высота карточки — по своему тексту, как в макете (а не по самой длинной соседней)
+  &__track
+    display: flex
+    align-items: flex-start
+    gap: 10px
+
+  // Слайдер двигает ленту сам, родная прокрутка не нужна.
+  // pan-y — вертикальный свайп по-прежнему листает страницу
+  &--slider
+    overflow: hidden
+
+    .weekly-cards__track
+      touch-action: pan-y
+      user-select: none
+      cursor: grab
+
+  &--dragging .weekly-cards__track
+    cursor: grabbing
+
+  // Чтобы браузер не таскал картинку вместо ленты
+  img
+    -webkit-user-drag: none
+
+  &__item
+    display: flex
+    flex-direction: column
+    flex: 0 0 320px
+    scroll-snap-align: start
+    background-color: $color-white
+    font-weight: $font-light
+
+  &__meta
+    display: flex
+    justify-content: space-between
+    padding: 12px 24px
+    font-size: 12px
+    text-transform: uppercase
+
+  // Пропорции как у фото на десктопе, поэтому кадровка .weekly__image--N подходит и тут
+  &__photo
+    position: relative
+    overflow: hidden
+    aspect-ratio: 320 / 355
+
+  &__name
+    flex-grow: 1
+    padding: 26px 24px
+    font-size: 20px
+    line-height: 1.25
+    text-align: center
+
+
+// Наборы и промокоды
+.bonus
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  gap: 40px
+
+  &__item
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 14px
+    padding-top: 24px
+    border-top: 1px solid $color-border
+    text-align: center
+
+  &__title
+    font-size: 23px
+    font-weight: $font-light
+
+  &__image
+    width: 360px
+    max-width: 100%
+    aspect-ratio: 360 / 250
+    height: auto
+    border-radius: $radius-xl
+    // Фото чуть выше карточки, сверху срезаем совсем немного — как в макете
+    object-fit: cover
+    object-position: center 21%
+
+  &__caption
+    font-size: 15px
+    font-weight: $font-light
+    line-height: 1.6
+    color: $color-text-muted
+
+  // Две карточки рядом — «Мои призы» в кабинете
+  &--pair
+    grid-template-columns: repeat(2, 1fr)
+    gap: 20px
+
+  // Планшет: две колонки, лишняя карточка встаёт по центру следующего ряда
+  @include media(tablet)
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+
+    &__item:last-child:nth-child(odd)
+      grid-column: 1 / -1
+
+  // Телефон: картинки и промокоды 320×222, как в мобильном макете
+  @include media(tablet-sm)
+    grid-template-columns: minmax(0, 1fr)
+
+    &__image
+      width: 320px
+      aspect-ratio: 320 / 222
+      border-radius: 36px
+
+    .promo-card
+      width: 320px
+      aspect-ratio: 320 / 222
+      border-radius: $radius-lg
+
+    .promo-card__logo
+      top: 18px
+      width: 112px
+      height: auto
+
+    .promo-card__value
+      font-size: 50px
+

@@ -1,0 +1,245 @@
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.hero
+  &__container
+    display: grid
+    grid-template-columns: 540px minmax(0, 820px)
+    justify-content: space-between
+    align-items: center
+    height: 670px
+    padding-right: 0
+
+  &__content
+    display: flex
+    flex-direction: column
+    gap: 32px
+
+  &__heading
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 20px
+
+  // Капс делаем стилями, в разметке обычный регистр
+  &__dates
+    padding: 6px 16px
+    border-radius: $radius-md
+    background-color: $color-badge-bg
+    font-size: 16px
+    text-transform: uppercase
+
+  &__title
+    max-width: 500px
+    font-size: 39px
+    font-weight: $font-light
+    line-height: 1.1
+
+  &__offer
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 28px
+
+  &__text
+    font-size: 18px
+    line-height: 1.6
+
+    strong
+      font-weight: $font-bold
+
+  // Коллаж
+  &__visual
+    position: relative
+    overflow: hidden
+    height: 100%
+    border-radius: $radius-xl
+    background-color: $color-bg-hero
+
+  // Мама с малышом, правый край уходит за рамку
+  &__family
+    position: absolute
+    top: -34px
+    left: 159px
+    width: 835px
+    height: 711px
+    max-width: none
+    object-fit: cover
+
+  &__blur
+    position: absolute
+    top: 0
+    left: 0
+    width: 386px
+    height: 100%
+    object-fit: cover
+
+  // Золотая капля
+  &__liquid
+    position: absolute
+    top: 370px
+    left: 34px
+    width: 398px
+    height: 398px
+    border-radius: 50%
+    object-fit: cover
+
+  &__prize-card
+    position: absolute
+    top: 24px
+    left: 24px
+    width: 340px
+    padding: 25px
+    border: 1px solid $color-border-card
+    border-radius: $radius-lg
+    color: $color-white
+
+  &__prize-label
+    font-size: 14px
+    font-weight: $font-light
+    line-height: 19.5px
+
+  &__prize-value
+    font-size: 46px
+    line-height: 60px
+
+  &__prize-text
+    padding-block: 20px
+    font-size: 18px
+    font-weight: $font-light
+    line-height: 30px
+
+  &__prize-count
+    font-size: 16px
+    line-height: 24px
+
+  // Флакон поверх всего, низ выглядывает за край
+  &__packshot
+    position: absolute
+    bottom: -150px
+    left: 265px
+    width: 238px
+    height: 704px
+    max-width: none
+
+  // Знак «Рекомендовано дерматологами» в правом верхнем углу
+  &__recommended
+    position: absolute
+    top: 24px
+    left: 626px
+    width: 165px
+    height: auto
+
+  // Ниже 1280 текст над коллажем, коллаж не шире десктопного
+  @include media(laptop)
+    &__container
+      grid-template-columns: 1fr
+      height: auto
+      gap: 48px
+      padding-block: 48px
+      padding-right: $container-padding-tablet
+
+    &__visual
+      width: 100%
+      max-width: 820px
+      height: 670px
+
+    // Коллаж бывает уже десктопного — знак держим у правого края, а не по координате
+    &__recommended
+      left: auto
+      right: 24px
+
+  // Телефон: своя компоновка коллажа из мобильного макета (карточка 355×354)
+  @include media(tablet-sm)
+    &__container
+      gap: 32px
+      // В макете у первого экрана поля 22px — чуть уже, чем у остальных разделов
+      padding: 23px 22px 0
+
+    &__content
+      gap: 21px
+
+    &__heading
+      gap: 13px
+
+    &__dates
+      padding: 4px 11px
+      font-size: 14px
+
+    // «выигрывайте призы!» — 340px, на 8px шире колонки. В макете заголовок тоже вылезает
+    // за поле, так он встаёт в три строки
+    &__title
+      max-width: none
+      margin-right: -12px
+      font-size: 32px
+
+    &__offer
+      gap: 19px
+
+    &__text
+      font-size: 14px
+
+    &__offer .button
+      --button-gap: 21px
+      height: 42px
+      padding-inline: 30px
+      font-size: 14px
+
+    &__naos
+      width: 300px
+      height: auto
+
+    // Карточка почти во всю ширину: поля 10px вместо 22
+    &__visual
+      max-width: 480px
+      height: 354px
+      margin-inline: -12px
+      width: auto
+
+    &__family
+      top: 0
+      left: 46px
+      width: calc(100% + 67px)
+      height: 359px
+
+    &__blur
+      width: 178px
+
+    &__liquid
+      top: 200px
+      left: 18px
+      width: 187px
+      height: 187px
+
+    // Тексты в макете шире полей карточки, поэтому справа поле меньше
+    &__prize-card
+      top: 10px
+      left: 10px
+      width: 160px
+      padding: 16px 8px 16px 16px
+      border-radius: 30px
+
+    &__prize-value
+      font-size: 26px
+      line-height: 1.2
+      white-space: nowrap
+
+    &__prize-text
+      padding-block: 6px
+      font-size: 14px
+      line-height: 1.2
+
+    &__prize-count
+      font-size: 14px
+
+    &__packshot
+      top: 111px
+      bottom: auto
+      left: 124px
+      width: 106px
+      height: 313px
+
+    // В мобильном макете знак за краем карточки — не показываем
+    &__recommended
+      display: none

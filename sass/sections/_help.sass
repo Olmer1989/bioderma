@@ -1,0 +1,102 @@
+// Помощь: вопросы слева, форма справа
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+.help
+  &__container
+    display: flex
+    flex-direction: column
+    gap: 24px
+    padding-block: 80px
+
+  &__columns
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    gap: 40px
+
+  &__faq
+    display: flex
+    flex-direction: column
+    gap: 19px
+    width: 900px
+    min-width: 0
+
+  &__feedback
+    flex-shrink: 0
+    width: 340px
+
+    .section-subtitle
+      margin-bottom: 16px
+
+  @include media(laptop)
+    &__columns
+      flex-direction: column
+
+    &__faq,
+    &__feedback
+      width: 100%
+
+  // Телефон: в макете вопросы и форма чуть шире полей раздела — повторяем
+  @include media(tablet-sm)
+    &__container
+      padding-block: 60px
+
+    // Рамка заголовка в макете выше текста — под «Помощью» отступ больше
+    .section-title
+      margin-bottom: 19px
+
+    &__columns
+      gap: 60px
+
+    &__faq .section-subtitle
+      padding-inline: 4px
+      font-size: 32px
+
+    // Ширину задаём явно: с auto колонка сжимается по форме и на 414 прижимается влево
+    &__feedback
+      width: calc(100% + 12px)
+      margin-inline: -6px
+
+      .section-subtitle
+        margin-bottom: 12px
+        font-size: 24px
+        line-height: 1.6
+
+
+// Карточка формы
+.feedback
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 19px
+  padding: 32px 30px
+  border-radius: $radius-xl
+  background-color: $color-bg-light
+
+  &__lead
+    font-size: 18px
+    font-weight: $font-light
+    line-height: 1.2
+    color: $color-text-dark
+    text-align: center
+
+  &__form
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 14px
+    width: 100%
+    max-width: 280px
+
+  &__status
+    font-size: 14px
+    text-align: center
+
+    &:empty
+      display: none
+
+  // Самые узкие телефоны: поля карточки поменьше, чтобы форма не сжималась
+  @include media(mobile-sm)
+    padding-inline: 20px

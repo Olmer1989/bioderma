@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет | BIODERMA × Фармленд</title>
+    <meta
+      name="description"
+      content="Личный кабинет участника акции BIODERMA × Фармленд: чеки и призы."
+    />
+    <!-- Кабинет в поиске не нужен, индексацию отключил -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link rel="icon" href="./images/logo-bioderma.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="./fonts/gotham-light.woff2?v=2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./fonts/gotham-book.woff2?v=2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Dropzone для загрузки чека. Его стили — до main.css, чтобы наши правки их перекрывали -->
+    <link rel="stylesheet" href="./css/vendor/dropzone.min.css" />
+
+    <link rel="stylesheet" href="./css/main.css" />
+    <script defer src="./js/vendor/dropzone.min.js"></script>
+    <script type="module" src="./js/main.js"></script>
+  </head>
+
+  <!-- Личный кабинет. Все данные на странице демонстрационные, потом возьмём из бэкенда (см. TODO).
+    Шапка и подвал продублированы с главной — при интеграции уедут в общий шаблон -->
+  <body>
+    <!-- Шапка, ссылки меню ведут на секции главной -->
+    <header class="header" data-header>
+      <div class="header__container">
+        <a class="header__brand" href="./index.html" aria-label="BIODERMA × Фармленд — на главную">
+          <img
+            class="header__logo"
+            src="./images/logo-bioderma.svg"
+            width="197"
+            height="40"
+            alt="BIODERMA"
+          />
+          <img
+            class="header__logo"
+            src="./images/logo-farmlend.svg"
+            width="126"
+            height="40"
+            alt="farmlend.ru"
+          />
+        </a>
+
+        <!-- На узких экранах меню открывается бургером (burger.js) -->
+        <nav class="header__nav" id="header-nav" aria-label="Основная навигация" data-burger-menu>
+          <ul class="header__menu">
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="./index.html#how">Как участвовать</a>
+            </li>
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="./index.html#prizes">Призы</a>
+            </li>
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="./index.html#winners">Победители</a>
+            </li>
+            <li class="header__menu-item">
+              <!-- TODO: ссылка на PDF с правилами, когда пришлёт заказчик -->
+              <a class="header__menu-link" href="./index.html#rules">Правила</a>
+            </li>
+            <li class="header__menu-item">
+              <a class="header__menu-link" href="./index.html#help">Вопрос-ответ</a>
+            </li>
+          </ul>
+          <a
+            class="button button--outline button--sm header__menu-cta"
+            href="./lk.html"
+            aria-current="page"
+          >
+            <span class="button__text">Личный кабинет</span>
+            <span class="button__icon" aria-hidden="true"></span>
+          </a>
+        </nav>
+
+        <a class="button button--outline button--sm" href="./lk.html" aria-current="page">
+          <span class="button__text">Личный кабинет</span>
+          <span class="button__icon" aria-hidden="true"></span>
+        </a>
+
+        <button
+          class="header__burger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="header-nav"
+          aria-label="Открыть меню"
+          data-burger
+        >
+          <span class="header__burger-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main lk">
+      <div class="container lk__container">
+        <h1 class="section-title section-title--md lk__title">Личный кабинет</h1>
+
+        <div class="lk__columns">
+          <!-- Профиль -->
+          <section class="lk-profile" aria-labelledby="lk-name">
+            <!-- TODO: имя и данные подставляет бэкенд -->
+            <h2 class="lk__heading" id="lk-name">Александр Смирнов</h2>
+
+            <dl class="lk-profile__data">
+              <div class="lk-profile__field">
+                <dt class="lk-profile__label">Телефон</dt>
+                <dd class="lk-profile__value">+7 999 123-45-67</dd>
+              </div>
+              <div class="lk-profile__field">
+                <dt class="lk-profile__label">E-mail</dt>
+                <dd class="lk-profile__value">alex.smirnov@example.com</dd>
+              </div>
+              <div class="lk-profile__field">
+                <dt class="lk-profile__label">Карта лояльности</dt>
+                <dd class="lk-profile__value">FLEND123456789</dd>
+              </div>
+            </dl>
+
+            <button class="button" type="button" data-popup-open="cheque">
+              <span class="button__text">Загрузить чек</span>
+              <span class="button__icon" aria-hidden="true"></span>
+            </button>
+          </section>
+
+          <!-- Мои чеки -->
+          <section class="lk-cheques" aria-labelledby="lk-cheques-title">
+            <h2 class="lk__heading" id="lk-cheques-title">Мои чеки</h2>
+
+            <div class="data-table">
+              <table class="data-table__table">
+                <thead>
+                  <tr>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Статус</th>
+                  </tr>
+                </thead>
+                <!-- TODO: строки выводит бэкенд. Статус задаётся модификатором:
+                  status--accepted, status--pending, status--rejected -->
+                <tbody>
+                  <tr>
+                    <td><time datetime="2026-11-12">12.11.2026</time></td>
+                    <td>3 790 ₽</td>
+                    <td><span class="status status--accepted">Принят</span></td>
+                  </tr>
+                  <tr>
+                    <td><time datetime="2026-11-19">19.11.2026</time></td>
+                    <td>2 340 ₽</td>
+                    <td><span class="status status--pending">На проверке</span></td>
+                  </tr>
+                  <tr>
+                    <td><time datetime="2026-11-24">24.11.2026</time></td>
+                    <td>2 990 ₽</td>
+                    <td><span class="status status--accepted">Принят</span></td>
+                  </tr>
+                  <tr>
+                    <td><time datetime="2026-11-28">28.11.2026</time></td>
+                    <td>1 290 ₽</td>
+                    <td><span class="status status--rejected">Отклонён</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Мои призы: те же карточки, что в «Призах» на главной. По клику открывается окно с кодом -->
+      <section class="lk-prizes" aria-labelledby="lk-prizes-title">
+        <div class="container lk-prizes__container">
+          <h2 class="section-title section-title--md" id="lk-prizes-title">Мои призы</h2>
+
+          <!-- TODO: карточки выводит бэкенд. Для подарочного набора готово окно prize-delivery -->
+          <ul class="bonus bonus--pair">
+            <li class="bonus__item">
+              <h3 class="bonus__title">Промокод 2 000 ₽</h3>
+              <button
+                class="promo-card promo-card--button"
+                type="button"
+                data-popup-open="prize-promocode"
+                aria-label="Промокод 2 000 ₽: показать код"
+              >
+                <video
+                  class="promo-card__video promo-card__video--mirrored"
+                  src="./images/prizes/promo-2000.mp4"
+                  poster="./images/prizes/promo-2000-poster.webp"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  data-lazy-video
+                  aria-hidden="true"
+                ></video>
+                <img
+                  class="promo-card__logo"
+                  src="./images/logo-farmlend-white.svg"
+                  width="126"
+                  height="40"
+                  alt=""
+                />
+                <span class="promo-card__value">2 000 ₽</span>
+              </button>
+              <p class="bonus__caption">10 промокодов каждую неделю · 40 всего</p>
+            </li>
+
+            <li class="bonus__item">
+              <h3 class="bonus__title">Промокод 4 000 ₽</h3>
+              <button
+                class="promo-card promo-card--button"
+                type="button"
+                data-popup-open="prize-promocode-4000"
+                aria-label="Промокод 4 000 ₽: показать код"
+              >
+                <video
+                  class="promo-card__video"
+                  src="./images/prizes/promo-4000.mp4"
+                  poster="./images/prizes/promo-4000-poster.webp"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  data-lazy-video
+                  aria-hidden="true"
+                ></video>
+                <img
+                  class="promo-card__logo"
+                  src="./images/logo-farmlend-white.svg"
+                  width="126"
+                  height="40"
+                  alt=""
+                />
+                <span class="promo-card__value">4 000 ₽</span>
+              </button>
+              <p class="bonus__caption">5 промокодов каждую неделю · 20 всего</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+      <div class="footer__info">
+        <div class="footer__legal">
+          <p>
+            Сроки проведения Акции, включая сроки выдачи призов с 09 ноября по 20 декабря 2026г.
+          </p>
+          <p>
+            Условие участия — быть зарегистрированным пользователем системы лояльности сети
+            «Фармленд»
+          </p>
+        </div>
+
+        <p class="footer__phone">
+          Телефон горячей линии:
+          <a class="footer__phone-link" href="tel:+78005500393">8 800 550-03-93</a>
+        </p>
+
+        <ul class="footer__docs">
+          <li>
+            <!-- TODO: ссылки на документы пришлёт заказчик -->
+            <a class="footer__link" href="#rules">Полные правила акции</a>
+          </li>
+          <li>
+            <a class="footer__link" href="#privacy">Политика конфиденциальности</a>
+          </li>
+        </ul>
+      </div>
+
+      <p class="footer__note">
+        *Продукция Bioderma рекомендована дерматологами для сопровождения терапии различных кожных
+        заболеваний и / или базового ухода за кожей по результатам исследования «2025 Brand Equity
+        Bioderma», проведенного в июле – сентябре 2025 г. ООО «Ипсос Комкон» среди 300 дерматологов в
+        крупных городах 8 ФО России.
+      </p>
+
+      <img
+        class="footer__logo"
+        src="./images/logo-bioderma-footer.svg?v=2"
+        width="1448"
+        height="288"
+        alt=""
+        loading="lazy"
+      />
+    </footer>
+
+    <!-- Окна кабинета по мобильному макету окон: выбор способа → камера, памятка и фото или ручной ввод → готово.
+      Окон призов (промокод, анкета доставки) в макете нет — собраны в том же стиле -->
+    <div class="backdrop" data-backdrop>
+      <div class="popup" data-popup>
+        <!-- Регистрация чека: выбор способа -->
+        <div
+          class="popup-content"
+          id="cheque"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cheque-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="cheque-title">Регистрация чека</h2>
+            <div class="cheque-ways">
+              <button type="button" class="button full" data-popup-open="cheque-camera">
+                <span class="button__text">С помощью камеры</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="button full" data-popup-open="cheque-info">
+                <span class="button__text">Загрузить фотографию</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="button full" data-popup-open="cheque-in-self">
+                <span class="button__text">Ввести вручную</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Регистрация чека: сканирование QR-кода камерой. Вёрстка по макету.
+          TODO (разработка): включить камеру в <video>, заполнить список камер,
+          распознать QR-код и подставить данные в форму ручного ввода -->
+        <div
+          class="popup-content"
+          id="cheque-camera"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cheque-camera-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="cheque-camera-title">Регистрация чека</h2>
+            <p class="popup-subtitle">
+              Наведи камеру на&nbsp;QR-код, и&nbsp;он&nbsp;будет автоматически отсканирован
+            </p>
+            <div class="cheque-camera">
+              <video
+                class="cheque-camera__video"
+                muted
+                playsinline
+                aria-label="Изображение с камеры"
+              ></video>
+            </div>
+            <div class="cheque-camera__picker">
+              <label class="visually-hidden" for="cheque-camera-select">Камера</label>
+              <select class="cheque-camera__select" id="cheque-camera-select" name="camera">
+                <option>Камера по умолчанию</option>
+              </select>
+            </div>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-open="cheque-in-self">
+                <span class="button__text">Ввести данные вручную</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="link" data-popup-open="cheque-info">
+                Загрузить фотографию чека
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Регистрация чека: памятка -->
+        <div
+          class="popup-content"
+          id="cheque-info"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cheque-info-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="cheque-info-title">Регистрация чека</h2>
+            <ul class="register-check-list">
+              <li>Нажми «Загрузить»</li>
+              <li>Выбери фото чека</li>
+              <li>
+                Фото чека должно быть:
+                <ul>
+                  <li>чётким</li>
+                  <li>с полным списком продуктов</li>
+                  <li>на фото должен быть <span class="nowrap">QR-код</span></li>
+                </ul>
+              </li>
+              <li>Если фото окажется плохого качества, чек принят не будет</li>
+            </ul>
+            <div class="example">
+              <img
+                src="./images/promo-kit/cheque-example.webp"
+                width="600"
+                height="440"
+                alt="Пример чека с QR-кодом"
+              />
+              <span>Пример чека</span>
+            </div>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-open="cheque-load">
+                <span class="button__text">Загрузить</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Регистрация чека: загрузка фото -->
+        <div
+          class="popup-content"
+          id="cheque-load"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cheque-load-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="cheque-load-title">Регистрация чека</h2>
+            <script>
+              // TODO (бэкенд): отправка файла. Пока без файла ругаемся подсказкой,
+              // с файлом — сразу «Чек зарегистрирован»
+              function onChequeLoadFormSubmit(e) {
+                e.preventDefault()
+                const hint = document.querySelector('[data-cheque-hint]')
+                if (!window.chequeDropzone?.files.length) {
+                  hint.textContent = 'Сначала добавь фото чека'
+                  return
+                }
+                hint.textContent = ''
+                // Чистим зону, чтобы «Загрузить ещё» начиналось с нуля
+                window.chequeDropzone.removeAllFiles()
+                window.popup.open('cheque-success')
+              }
+            </script>
+            <form action="#" class="dropzone" data-cheque-dropzone></form>
+            <p class="popup-hint" role="status" data-cheque-hint></p>
+            <div class="buttons">
+              <button
+                type="button"
+                class="button full"
+                data-cheque-submit
+                onclick="onChequeLoadFormSubmit(event)"
+              >
+                <span class="button__text">Далее</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+              <p class="popup-note">Нет возможности сфотографировать чек?</p>
+              <button type="button" class="link" data-popup-open="cheque-in-self">
+                Введи данные чека вручную
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Регистрация чека: ручной ввод -->
+        <div
+          class="popup-content"
+          id="cheque-in-self"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cheque-self-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title" id="cheque-self-title">Ввод данных чека</h2>
+            <p class="popup-subtitle">Внимательно введи<br />данные чека в&nbsp;поля ниже</p>
+            <script>
+              // TODO (бэкенд): отправка данных чека
+              function onChequeSelfFormSubmit(e) {
+                e.preventDefault()
+                e.target.reset()
+                window.popup.open('cheque-success')
+              }
+            </script>
+            <!-- ФН, ФД, ФП — фискальные реквизиты, они напечатаны на чеке -->
+            <form action="#" class="form" novalidate onsubmit="onChequeSelfFormSubmit(event)">
+              <label class="label">
+                <span class="label__text">ФН</span>
+                <input
+                  type="text"
+                  name="fn"
+                  class="input"
+                  placeholder="ФН"
+                  inputmode="numeric"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">ФД</span>
+                <input
+                  type="text"
+                  name="fd"
+                  class="input"
+                  placeholder="ФД"
+                  inputmode="numeric"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">ФП</span>
+                <input
+                  type="text"
+                  name="fp"
+                  class="input"
+                  placeholder="ФП"
+                  inputmode="numeric"
+                  required
+                />
+              </label>
+              <!-- У полей даты и времени не бывает подсказки внутри — до фокуса они текстовые -->
+              <label class="label">
+                <span class="label__text">Дата покупки</span>
+                <input
+                  type="text"
+                  name="date"
+                  class="input"
+                  placeholder="Дата покупки"
+                  min="2026-11-09"
+                  max="2026-12-06"
+                  onfocus="this.type = 'date'"
+                  onblur="if (!this.value) this.type = 'text'"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">Время покупки</span>
+                <input
+                  type="text"
+                  name="time"
+                  class="input"
+                  placeholder="Время покупки"
+                  onfocus="this.type = 'time'"
+                  onblur="if (!this.value) this.type = 'text'"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">Сумма покупки</span>
+                <input
+                  type="number"
+                  name="summa"
+                  class="input"
+                  placeholder="Сумма покупки"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </label>
+              <div class="buttons">
+                <button type="submit" class="button full">
+                  <span class="button__text">Отправить</span>
+                  <span class="button__icon" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="link" data-popup-open="cheque-load">
+                  Попробовать снова загрузить фото
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Чек зарегистрирован -->
+        <div
+          class="popup-content"
+          id="cheque-success"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cheque-success-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="cheque-success-title">Чек<br />зарегистрирован</h2>
+            <p class="popup-subtitle">
+              <span
+                >Чек на&nbsp;проверке.<br />Следи за&nbsp;его статусом<br />в&nbsp;своём личном
+                кабинете.</span
+              >
+            </p>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-open="cheque">
+                <span class="button__text">Загрузить ещё</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Приз: промокод -->
+        <div
+          class="popup-content"
+          id="prize-promocode"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="promocode-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="promocode-title">
+              Промокод «Фармленд»<br />на&nbsp;2&nbsp;000&nbsp;₽
+            </h2>
+            <p class="popup-subtitle">Твой промокод:</p>
+            <!-- TODO (бэкенд): код промокода -->
+            <div class="promocode">
+              <code class="promocode__value" data-copy-source>BIO-2000-XK7Q</code>
+              <button type="button" class="promocode__copy" data-copy-button>Скопировать</button>
+            </div>
+            <p class="popup-subtitle">
+              Используй его при оформлении заказа на&nbsp;farmlend.ru или&nbsp;назови
+              в&nbsp;аптеке «Фармленд»
+            </p>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-close>
+                <span class="button__text">Готово</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Приз: промокод на 4 000 ₽ -->
+        <div
+          class="popup-content"
+          id="prize-promocode-4000"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="promocode-4000-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="promocode-4000-title">
+              Промокод «Фармленд»<br />на&nbsp;4&nbsp;000&nbsp;₽
+            </h2>
+            <p class="popup-subtitle">Твой промокод:</p>
+            <!-- TODO (бэкенд): код промокода -->
+            <div class="promocode">
+              <code class="promocode__value" data-copy-source>BIO-4000-M2PD</code>
+              <button type="button" class="promocode__copy" data-copy-button>Скопировать</button>
+            </div>
+            <p class="popup-subtitle">
+              Используй его при оформлении заказа на&nbsp;farmlend.ru или&nbsp;назови
+              в&nbsp;аптеке «Фармленд»
+            </p>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-close>
+                <span class="button__text">Готово</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Приз: анкета доставки -->
+        <div
+          class="popup-content"
+          id="prize-delivery"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delivery-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="delivery-title">Подарочный набор BIODERMA</h2>
+            <p class="popup-subtitle">Укажи данные для&nbsp;доставки приза</p>
+            <script>
+              // TODO (бэкенд): отправка анкеты
+              function onDeliveryFormSubmit(e) {
+                e.preventDefault()
+                e.target.reset()
+                window.popup.open('prize-delivery-success')
+              }
+            </script>
+            <form action="#" class="form" novalidate onsubmit="onDeliveryFormSubmit(event)">
+              <label class="label">
+                <span class="label__text">ФИО получателя</span>
+                <input
+                  type="text"
+                  name="name"
+                  class="input"
+                  placeholder="ФИО получателя"
+                  autocomplete="name"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">Мобильный телефон</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  class="input"
+                  placeholder="Мобильный телефон"
+                  autocomplete="off"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">Город</span>
+                <input
+                  type="text"
+                  name="city"
+                  class="input"
+                  placeholder="Город"
+                  autocomplete="address-level2"
+                  required
+                />
+              </label>
+              <label class="label">
+                <span class="label__text">Улица</span>
+                <input
+                  type="text"
+                  name="street"
+                  class="input"
+                  placeholder="Улица"
+                  autocomplete="address-line1"
+                  required
+                />
+              </label>
+              <label class="label label--half">
+                <span class="label__text">Дом</span>
+                <input type="text" name="house" class="input" placeholder="Дом" required />
+              </label>
+              <label class="label label--half">
+                <span class="label__text">Квартира</span>
+                <input type="text" name="flat" class="input" placeholder="Квартира" />
+              </label>
+              <label class="label">
+                <span class="label__text">Индекс</span>
+                <input
+                  type="text"
+                  name="postcode"
+                  class="input"
+                  placeholder="Индекс"
+                  inputmode="numeric"
+                  maxlength="6"
+                  autocomplete="postal-code"
+                  required
+                />
+              </label>
+              <div class="buttons">
+                <button type="submit" class="button full">
+                  <span class="button__text">Отправить</span>
+                  <span class="button__icon" aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Данные для доставки получены -->
+        <div
+          class="popup-content"
+          id="prize-delivery-success"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delivery-success-title"
+        >
+          <button class="popup-close" type="button" data-popup-close aria-label="Закрыть"></button>
+          <div class="red-wrapper">
+            <h2 class="popup-title gold" id="delivery-success-title">Данные получены</h2>
+            <p class="popup-subtitle">
+              Мы&nbsp;свяжемся с&nbsp;тобой, чтобы согласовать доставку приза
+            </p>
+            <div class="buttons">
+              <button type="button" class="button full" data-popup-close>
+                <span class="button__text">Закрыть</span>
+                <span class="button__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,516 @@
+// Перекрашиваем шаблон President в цвета Bioderma через его же переменные.
+// Имена вроде --yellow оставили родные, чтобы обновлять шаблон простым копированием.
+// Оформление окон — по мобильному макету окон (секция modals, 375px): светлое окно,
+// тёмные кнопки сайта со стрелкой, заголовки капсом, поля без подписей сверху
+
+@use "../base/variables" as *
+@use "../base/mixins" as *
+
+:root
+  --gilroy: #{$font-family}
+  --title: #{$font-family}
+
+  --bg: #{$color-bg-light}
+  --bg-dark: #{$color-primary-dark}
+  --red: #{$color-primary}
+  --red-text: #{$color-primary}
+  --white: #{$color-white}
+  --color: #{$color-primary-dark}
+  // «Чёрный» — фон камеры и зоны загрузки
+  --black: #{$color-dropzone-bg}
+
+  // «Жёлтый» у шаблона — акцент: рамки камеры и зоны загрузки, фокус поля, подсказка об ошибке
+  --yellow: #{$color-primary}
+  --yellow-light: #{$color-primary}
+  // Градиентом шаблон красит заголовки и вкладки — у нас они одного цвета
+  --golden-gradient: linear-gradient(#{$color-primary-dark}, #{$color-primary-dark})
+  --gradient: linear-gradient(#{$color-primary-dark}, #{$color-primary-dark})
+
+  --invalid: #{$color-error}
+
+  --input-font-family: #{$font-family}
+  --input-height: 40px
+  --input-color: #{$color-text-dark}
+  --input-placeholder-color: #{$color-text-dark}
+
+
+// Другие цвета из шаблона
+
+.popup
+  color: $color-primary-dark
+  font-family: $font-family
+
+.red-wrapper
+  padding: 25px 32px 41px
+  border-radius: $radius-md
+  background: $color-bg-light
+
+  .buttons
+    gap: 24px
+    margin-top: 24px
+
+// Телефон: окно во всю ширину экрана, как в макете
+.backdrop
+  @include media(tablet-sm)
+    padding-inline: 0
+
+// Крестик над окном. Белый — он лежит на затемнённом фоне, а не на окне
+.popup-close
+  &::before,
+  &::after
+    background: $color-white
+
+  @include media(tablet-sm)
+    right: 8px
+
+.popup-title,
+.popup-title.popup-title--white
+  margin-bottom: 24px
+  font-size: 24px
+  font-weight: $font-book
+  line-height: 1.2
+  text-transform: uppercase
+  color: $color-primary-dark
+  -webkit-text-fill-color: currentColor
+
+.popup-subtitle
+  margin-bottom: 24px
+  font-size: 16px
+  line-height: 1.2
+
+  // Крупный текст в окне «Чек зарегистрирован»
+  span
+    font-size: 20px
+
+:where(.popup button)
+  padding: 0
+  border: none
+  background: none
+  color: inherit
+  font: inherit
+  cursor: pointer
+
+// Кнопки — те же, что на сайте, только ниже и с полями поуже, чтобы надпись не переносилась
+.popup .button
+  height: 53px
+
+.popup .button.full
+  padding-inline: 24px
+
+.button.full
+  width: 100%
+
+  // Длинная надпись на телефоне переносится, а не распирает окно
+  @include media(tablet-sm)
+    height: auto
+    min-height: 53px
+    padding-block: 12px
+    white-space: normal
+    text-align: center
+
+// Переходы между окнами сделаны кнопками, чтобы выглядели как ссыкли 
+.popup button.link
+  display: block
+  margin: 0 auto
+  padding: 0
+  border: none
+  background: none
+  font-size: 14px
+  color: $color-primary
+  text-decoration: underline
+  text-underline-offset: 3px
+  cursor: pointer
+
+
+// Мои добавки к шаблону
+
+.popup .form
+  gap: 12px
+
+// Подписи над полями в макете нет — подсказка внутри поля. Для скринридера подпись остаётся
+.popup .label > .label__text:first-child
+  position: absolute
+  width: 1px
+  height: 1px
+  overflow: hidden
+  clip-path: inset(50%)
+  white-space: nowrap
+
+.popup .input
+  padding: 0 20px
+  border-radius: $radius-md
+  font-weight: $font-light
+
+  &::placeholder
+    font-weight: $font-light
+
+// Поле в полширины: дом и квартира
+.label--half
+  width: calc(50% - 6px)
+
+// Галочка: квадрат 26px слева, строка 47px, текст по центру строки — как квадрат.
+// Текст со ссылками лежит в обёртке .label__content: без неё flex рвёт его на отдельные куски
+.popup .checkbox + .label__text
+  display: flex
+  align-items: center
+  min-height: 47px
+  margin: 0
+  padding: 0 0 0 42px
+  font-size: 14px
+  line-height: 1.2
+  color: $color-primary-dark
+
+  .label__content
+    display: block
+
+  &::before
+    top: 50%
+    border-color: $color-primary-dark
+    translate: 0 -50%
+
+  a
+    margin: 0
+    font-size: inherit
+    color: $color-label
+    text-decoration: none
+
+.popup fieldset
+  width: 100%
+  min-width: 0
+  margin: 0
+  padding: 0
+
+.inputError span
+  color: $color-white
+
+
+// Вход и регистрация
+
+#login
+  .tabs
+    border-radius: 24px
+    background: $color-bg-light
+
+  // Неактивная вкладка — голубая подложка, активная лежит поверх неё цветом окна
+  .tabs-navigation
+    border-radius: 24px 24px 0 0
+    background: $color-tab-inactive
+
+    li:first-child
+      flex: 0 0 135px
+      max-width: none
+
+    // В макете надпись стоит на 3–4px ниже середины вкладки
+    li button
+      min-height: 66px
+      padding: 7px 20px 0
+      font-size: 24px
+      color: $color-white
+
+      span
+        background: none
+        color: inherit
+        -webkit-text-fill-color: currentColor
+
+      &.active
+        background: $color-bg-light
+        color: $color-primary-dark
+
+  .form
+    gap: 13px
+    padding: 28px 0 45px
+
+  #login-code,
+  #register-code
+    padding-bottom: 32px
+
+  // Согласия в регистрации мельче «Запомнить меня» и стоят вплотную к пояснению
+  #register-form
+    padding-bottom: 41px
+
+    fieldset
+      margin-block: -9px -1px
+
+    .checkbox + .label__text
+      font-size: 12px
+
+  // Уже 375 «Регистрация» в 24px не помещается
+  @include media(mobile-sm)
+    .tabs-navigation
+      li:first-child
+        flex-basis: 110px
+
+      li button
+        font-size: 20px
+
+// Пояснение про звонок с кодом и номер для обратного звонка
+.popup-note
+  display: flex
+  flex-direction: column
+  gap: 14px
+  width: 100%
+  font-size: 12px
+  line-height: 1.2
+  text-align: center
+
+  &--left
+    text-align: left
+
+  // Номер в макете идёт сразу за текстом, без пустой строки
+  &__phone
+    margin-top: -14px
+    font-size: 24px
+    white-space: nowrap
+
+// «Назад» к вводу номера — по центру, как в макете
+.popup button.link--back
+  align-self: center
+  margin-top: 6px
+  font-size: 16px
+
+
+// Регистрация чека
+
+// Выбор способа
+.cheque-ways
+  display: flex
+  flex-direction: column
+  gap: 24px
+  width: 100%
+
+// У шаблона на телефоне свои поля для этого окна — возвращаем общие
+#cheque
+  .red-wrapper
+    padding: 25px 32px 41px
+
+  .popup-title
+    margin-bottom: 38px
+
+// Камера: чёрная рамка с синей обводкой, под ней выбор камеры
+.cheque-camera
+  overflow: hidden
+  width: 100%
+  aspect-ratio: 310 / 199
+  border: 6px solid var(--yellow)
+  border-radius: $radius-md
+  background: var(--black)
+
+  &__video
+    display: block
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+  // Стрелка списка — та же иконка, что в форме «Помощь», повёрнутая вниз
+  &__picker
+    position: relative
+    width: 100%
+    margin-top: 24px
+
+    &::after
+      content: ""
+      position: absolute
+      top: 50%
+      right: 20px
+      pointer-events: none
+      color: $color-primary
+      @include icon-mask("../images/icons/chevron.svg", 14px)
+      translate: 0 -50%
+      rotate: 90deg
+
+  &__select
+    width: 100%
+    height: 40px
+    padding: 0 48px 0 20px
+    border: none
+    border-radius: $radius-md
+    background-color: $color-white
+    font-family: inherit
+    font-size: 14px
+    font-weight: $font-light
+    color: $color-text-dark
+    appearance: none
+    cursor: pointer
+
+#cheque-camera
+  .popup-title
+    margin-bottom: 32px
+
+  // В макете текст уже окна и встаёт в три строки
+  .popup-subtitle
+    padding-inline: 6px
+
+  // У этой кнопки в макете стрелка ближе к тексту
+  .button
+    --button-gap: 18px
+
+  .red-wrapper
+    padding-bottom: 42px
+
+// Памятка: простой список, без иконок шаблона
+#cheque-info
+  .red-wrapper
+    padding-bottom: 30px
+
+  .popup-title
+    margin-bottom: 34px
+
+  // Текст в макете уже: поля 41px слева и 37 справа, пример и кнопка — с общими 32
+  .register-check-list
+    gap: 24px
+    margin: 0 0 40px
+    padding: 0 5px 0 9px
+
+    li
+      padding-left: 0
+      font-size: 16px
+      line-height: 1.2
+
+    ul
+      gap: 8px
+      margin: 12px 0 0
+
+  .example
+    gap: 8px
+
+    img
+      aspect-ratio: 310 / 230
+      border: 6px solid $color-primary
+      border-radius: $radius-md
+      object-fit: cover
+
+    // В макете подпись белая и на светлом окне не видна — делаем приглушённой
+    span
+      opacity: 0.6
+
+  .buttons
+    margin-top: 12px
+
+// Загрузка фото: зона загрузки, а когда фото выбрано — жёлтая рамка вокруг превью
+#cheque-load
+  .popup-title
+    margin-bottom: 38px
+
+  .red-wrapper
+    padding-bottom: 32px
+
+  .dropzone
+    border-width: 6px
+
+    &.dz-started
+      border-color: $color-preview-border
+
+  // Пустая зона: плюс 59×54 и текст под ним стоят по макету, а не по центру шаблона
+  .dropzone:not(.dz-started)
+    align-content: flex-start
+
+  .dz-default.dz-message
+    margin-top: 124px
+
+    .dz-button
+      max-width: 211px
+      margin-top: 0
+      font-size: 12px
+      opacity: 1
+
+      &::before
+        bottom: calc(100% + 30px)
+        width: 59px
+        height: 54px
+        margin-left: -29.5px
+
+  // «Нет возможности сфотографировать чек?» и ссылка под ним — ближе друг к другу
+  .popup-note
+    margin-top: 7px
+    font-size: 16px
+
+  .link
+    margin-top: -10px
+
+  // Фото выбрано — в макете под кнопкой больше ничего нет
+  &:has(.dz-started)
+    .popup-note,
+    .link
+      display: none
+
+.popup-hint
+  font-size: 14px
+  text-align: center
+  color: var(--invalid)
+
+  &:not(:empty)
+    margin-top: 12px
+
+// Ручной ввод: кнопка в макете шире полей
+#cheque-in-self
+  .red-wrapper
+    padding-bottom: 24px
+
+  .popup-title
+    margin-bottom: 11px
+
+  .popup-subtitle
+    margin-bottom: 13px
+
+  .buttons
+    width: calc(100% + 20px)
+    margin: 14px -10px 0
+
+#cheque-success
+  .red-wrapper
+    padding-bottom: 25px
+
+  .buttons
+    margin-top: 33px
+
+  .popup-subtitle
+    margin-bottom: 0
+
+
+// Окна, которых нет в макете, — в том же стиле
+
+// Промокод с кнопкой «Скопировать»
+.promocode
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 12px
+  margin-bottom: 20px
+  padding: 12px 12px 12px 20px
+  border: 1px dashed rgba($color-primary, 0.5)
+  border-radius: $radius-md
+  background-color: $color-white
+
+  &__value
+    font-family: $font-family
+    font-size: 22px
+    letter-spacing: 0.06em
+    // В окнах шаблона выделение текста выключено, а код должно быть удобно выделить
+    user-select: all
+
+  &__copy
+    flex-shrink: 0
+    padding: 8px 16px
+    border: 1px solid $color-primary
+    border-radius: $radius-md
+    font-size: 14px
+    color: $color-primary
+    transition: background-color $transition-fast, color $transition-fast
+
+    &:hover,
+    &:focus-visible
+      background-color: $color-primary
+      color: $color-white
+
+// «Спасибо!» после формы «Помощи»
+.success-text
+  display: flex
+  flex-direction: column
+  gap: 8px
+  font-size: 16px
+  line-height: 1.2
+  text-align: center
+
+  strong
+    font-size: 20px
+    font-weight: $font-book

@@ -1,0 +1,222 @@
+/**
+ * Взят шаблон PROMO-KIT из промо-проекта President (github.com/RuslanMirasov/president-cheese)
+ */
+
+export const popup = {
+  _backdrop: null,
+  _popup: null,
+  _opener: null, // откуда открыли окно — туда и вернём фокус
+  _scrollY: 0,
+  _isOpening: false,
+  _isLocked: false,
+  _isAnimating: false,
+
+  init() {
+    this._backdrop = document.querySelector('[data-backdrop]');
+    this._popup = this._backdrop?.querySelector('[data-popup]');
+
+    if (!this._backdrop || !this._popup) {
+      console.warn('Контейнеры для попапа не найдены');
+      return;
+    }
+
+    this._bindCloseEvents();
+  },
+
+  async open(id, { locked = false } = {}) {
+    if (this._isOpening || this._isAnimating) return;
+
+    this._isOpening = true;
+    this._isLocked = locked;
+
+    const newContent = this._popup.querySelector(`#${id}`);
+
+    if (!newContent) {
+      console.warn(`Попап с id="${id}" не найден`);
+      this._isOpening = false;
+      return;
+    }
+
+    const currentContent = this._popup.querySelector('.popup-content[style*="display: block"]');
+
+    if (currentContent && currentContent !== newContent) {
+      // close() сбросит кнопку-открывашку, придерживаем её
+      const opener = this._opener;
+      await this.close(true);
+      this._opener = opener;
+    }
+
+    const alreadyVisible = this._popup.classList.contains('visible');
+
+    if (alreadyVisible) {
+      await this._switchContent(newContent);
+    } else {
+      this._scrollY = window.scrollY;
+      await this._showContent(newContent);
+    }
+
+    // фокус сразу в окно, иначе клавиатура так и останется на странице
+    newContent.querySelector('input, select, textarea, button:not(.popup-close), a[href]')?.focus();
+
+    this._isOpening = false;
+  },
+
+  async close(force = false) {
+    if (this._isLocked && !force) return;
+
+    if (this._isOpening || this._isAnimating) return;
+
+    this._isOpening = true;
+
+    this._popup.classList.remove('visible');
+    this._backdrop.classList.remove('active');
+
+    await this._waitForTransition(this._backdrop);
+
+    this._unlockScroll();
+    this._setPageInert(false);
+    this._hideAllContent();
+
+    this._isLocked = false;
+    this._isOpening = false;
+
+    this._opener?.focus();
+    this._opener = null;
+  },
+
+  _bindCloseEvents() {
+    // click, а не mousedown: Enter и пробел дают именно click
+    document.addEventListener('click', e => {
+      if (this._isOpening || this._isAnimating) return;
+
+      const openBtn = e.target.closest('[data-popup-open]');
+
+      if (openBtn) {
+        e.preventDefault();
+        if (!this._popup.classList.contains('visible')) this._opener = openBtn;
+        this.open(openBtn.dataset.popupOpen);
+        return;
+      }
+
+      const isCloseTarget = e.target === this._backdrop || e.target.closest('[data-popup-close]');
+
+      if (isCloseTarget && !this._isLocked) {
+        this.close();
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+
+      if (this._isOpening || this._isAnimating) return;
+      if (this._isLocked) return;
+
+      this.close();
+    });
+  },
+
+  async _switchContent(newContent) {
+    this._popup.classList.remove('visible');
+    await this._waitForTransition(this._backdrop);
+    this._hideAllContent();
+    newContent.style.display = 'block';
+    this._popup.classList.add('visible');
+    await this._waitForTransition(this._backdrop);
+  },
+
+  async _showContent(newContent) {
+    this._hideAllContent();
+    newContent.style.display = 'block';
+
+    const popupHeight = newContent.offsetHeight;
+    const shouldLockScroll = popupHeight <= window.innerHeight - 100;
+
+    this._lockScroll(shouldLockScroll);
+
+    this._backdrop.classList.add('active');
+    this._popup.classList.add('visible');
+    this._setPageInert(true);
+
+    await this._waitForTransition(this._backdrop);
+  },
+
+  _hideAllContent() {
+    this._popup.querySelectorAll('.popup-content').forEach(el => {
+      el.style.display = 'none';
+    });
+  },
+
+  async _waitForTransition(element, propertyName = 'opacity') {
+    this._isAnimating = true;
+
+    return new Promise(resolve => {
+      const duration = parseFloat(getComputedStyle(element).transitionDuration) * 1000;
+
+      if (duration === 0) {
+        this._isAnimating = false;
+        resolve();
+        return;
+      }
+
+      const handler = e => {
+        if (e.propertyName === propertyName) {
+          element.removeEventListener('transitionend', handler);
+          this._isAnimating = false;
+          resolve();
+        }
+      };
+
+      element.addEventListener('transitionend', handler, { once: true });
+
+      setTimeout(() => {
+        element.removeEventListener('transitionend', handler);
+        this._isAnimating = false;
+        resolve();
+      }, duration + 50);
+    });
+  },
+
+  // Пока окно открыто, страница под ним inert — Tab не убегает из окна
+  _setPageInert(isInert) {
+    document.querySelectorAll('body > *:not([data-backdrop]):not(script)').forEach(el => {
+      el.inert = isInert;
+    });
+  },
+
+  _lockScroll() {
+    const header = document.querySelector('.header');
+    const fixedBackgrounds = document.querySelectorAll('[data-fix-bg]');
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.width = `calc(100% - ${scrollbarWidth}px)`;
+
+    if (header) {
+      header.style.width = `calc(100% - ${scrollbarWidth}px)`;
+    }
+
+    if (fixedBackgrounds.length > 0) {
+      fixedBackgrounds.forEach(bg => {
+        bg.style.width = `calc(100% - ${scrollbarWidth}px)`;
+      });
+    }
+  },
+
+  _unlockScroll() {
+    const header = document.querySelector('.header');
+    const fixedBackgrounds = document.querySelectorAll('[data-fix-bg]');
+
+    if (header) {
+      header.style.width = '100%';
+    }
+
+    if (fixedBackgrounds.length > 0) {
+      fixedBackgrounds.forEach(bg => {
+        bg.style.width = '100%';
+      });
+    }
+
+    document.body.style.overflow = '';
+    document.body.style.width = '100%';
+  },
+};
