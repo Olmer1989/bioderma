@@ -2595,7 +2595,7 @@ a.dz-remove {
   .hero__title {
     max-width: none;
     margin-right: -12px;
-    font-size: 32px;
+    font-size: clamp(20px, 7.5vw - 3px, 32px);
   }
   .hero__offer {
     gap: 19px;

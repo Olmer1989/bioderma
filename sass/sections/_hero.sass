@@ -167,12 +167,11 @@
       padding: 4px 11px
       font-size: 14px
 
-    // «выигрывайте призы!» — 340px, на 8px шире колонки. В макете заголовок тоже вылезает
-    // за поле, так он встаёт в три строки
+    // Изменение макета на вид в 2 строки для мобильников
     &__title
       max-width: none
       margin-right: -12px
-      font-size: 32px
+      font-size: clamp(20px, calc(7.5vw - 3px), 32px)
 
     &__offer
       gap: 19px
