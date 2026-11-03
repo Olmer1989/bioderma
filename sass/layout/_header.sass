@@ -30,10 +30,15 @@
   &__nav
     margin-left: auto
 
+  // Не сжимаем кнопку, иначе «Личный кабинет» вылезает из рамки
+  &__container > .button
+    flex-shrink: 0
+
+  // На 1280–1360 шапке не хватает места, расстояние между пунктами плавно уменьшается до 12px
   &__menu
     display: flex
     align-items: center
-    gap: 32px
+    gap: clamp(12px, 25vw - 308px, 32px)
 
   &__menu-link
     font-size: 16px

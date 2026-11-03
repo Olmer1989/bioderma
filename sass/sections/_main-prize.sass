@@ -34,9 +34,12 @@
     align-items: center
     justify-content: center
     flex: 0 1 678px
+    min-width: 0
     min-height: 465px
 
+    // На 1280–1315 область уже карточки — карточка ужимается вместе с ней
     .promo-card
+      max-width: 100%
       rotate: -6deg
 
   @include media(laptop)

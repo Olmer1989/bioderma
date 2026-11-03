@@ -2,6 +2,11 @@
 @use "../base/variables" as *
 @use "../base/mixins" as *
 
+// Коллаж свёрстан по координатам макета шириной 820px. Все координаты умножаем на --hero-unit:
+// когда коллаж уже макета, он уменьшается целиком, а не обрезается справа
+@function hv($px)
+  @return calc(#{$px} * var(--hero-unit))
+
 .hero
   &__container
     display: grid
@@ -51,19 +56,21 @@
 
   // Коллаж
   &__visual
+    --hero-unit: calc(100cqw / 820)
+    container-type: inline-size
     position: relative
     overflow: hidden
-    height: 100%
+    aspect-ratio: 820 / 670
     border-radius: $radius-xl
     background-color: $color-bg-hero
 
   // Мама с малышом, правый край уходит за рамку
   &__family
     position: absolute
-    top: -34px
-    left: 159px
-    width: 835px
-    height: 711px
+    top: hv(-34)
+    left: hv(159)
+    width: hv(835)
+    height: hv(711)
     max-width: none
     object-fit: cover
 
@@ -71,67 +78,68 @@
     position: absolute
     top: 0
     left: 0
-    width: 386px
+    width: hv(386)
     height: 100%
     object-fit: cover
 
   // Золотая капля
   &__liquid
     position: absolute
-    top: 370px
-    left: 34px
-    width: 398px
-    height: 398px
+    top: hv(370)
+    left: hv(34)
+    width: hv(398)
+    height: hv(398)
     border-radius: 50%
     object-fit: cover
 
   &__prize-card
     position: absolute
-    top: 24px
-    left: 24px
-    width: 340px
-    padding: 25px
+    top: hv(24)
+    left: hv(24)
+    width: hv(340)
+    padding: hv(25)
     border: 1px solid $color-border-card
-    border-radius: $radius-lg
+    border-radius: hv(32)
     color: $color-white
 
   &__prize-label
-    font-size: 14px
+    font-size: hv(14)
     font-weight: $font-light
-    line-height: 19.5px
+    line-height: hv(19.5)
 
   &__prize-value
-    font-size: 46px
-    line-height: 60px
+    font-size: hv(46)
+    line-height: hv(60)
 
   &__prize-text
-    padding-block: 20px
-    font-size: 18px
+    padding-block: hv(20)
+    font-size: hv(18)
     font-weight: $font-light
-    line-height: 30px
+    line-height: hv(30)
 
   &__prize-count
-    font-size: 16px
-    line-height: 24px
+    font-size: hv(16)
+    line-height: hv(24)
 
   // Флакон поверх всего, низ выглядывает за край
   &__packshot
     position: absolute
-    bottom: -150px
-    left: 265px
-    width: 238px
-    height: 704px
+    bottom: hv(-150)
+    left: hv(265)
+    width: hv(238)
+    height: hv(704)
     max-width: none
 
   // Знак «Рекомендовано дерматологами» в правом верхнем углу
   &__recommended
     position: absolute
-    top: 24px
-    left: 626px
-    width: 165px
+    top: hv(24)
+    left: hv(626)
+    width: hv(165)
     height: auto
 
-  // Ниже 1280 текст над коллажем, коллаж не шире десктопного
+  // Ниже 1280 текст над коллажем, коллаж во всю ширину, но не выше макета.
+  // Шире 820 слои остаются в масштабе макета, а фото растягивается вправо до края
   @include media(laptop)
     &__container
       grid-template-columns: 1fr
@@ -141,14 +149,16 @@
       padding-right: $container-padding-tablet
 
     &__visual
+      --hero-unit: min(1px, 100cqw / 820)
       width: 100%
-      max-width: 820px
-      height: 670px
+      max-height: 670px
 
-    // Коллаж бывает уже десктопного — знак держим у правого края, а не по координате
+    &__family
+      width: calc(100% - #{hv(159)})
+
     &__recommended
       left: auto
-      right: 24px
+      right: hv(29)
 
   // Телефон: своя компоновка коллажа из мобильного макета (карточка 355×354)
   @include media(tablet-sm)
@@ -193,6 +203,7 @@
     &__visual
       max-width: 480px
       height: 354px
+      aspect-ratio: auto
       margin-inline: -12px
       width: auto
 
@@ -219,6 +230,10 @@
       padding: 16px 8px 16px 16px
       border-radius: 30px
 
+    &__prize-label
+      font-size: 14px
+      line-height: 19.5px
+
     &__prize-value
       font-size: 26px
       line-height: 1.2
@@ -231,6 +246,7 @@
 
     &__prize-count
       font-size: 14px
+      line-height: 24px
 
     &__packshot
       top: 111px
