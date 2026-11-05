@@ -3395,6 +3395,14 @@ a.dz-remove {
   flex-grow: 1;
   min-width: 0;
 }
+.lk-cheques .data-table__table td:nth-child(3) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: none;
+}
+.lk-cheques .status {
+  white-space: normal;
+}
 @media (width < 1280px) {
   .lk-cheques {
     width: 100%;
@@ -3431,6 +3439,10 @@ a.dz-remove {
   }
   .lk-cheques .data-table__table th:nth-child(2) {
     width: 27%;
+  }
+  .lk-cheques .data-table__table td:nth-child(-n+2) {
+    white-space: nowrap;
+    hyphens: none;
   }
   .lk-cheques .status {
     font-size: 13px;

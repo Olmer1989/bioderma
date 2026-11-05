@@ -107,6 +107,14 @@
   // Даём колонке ужиматься, таблица прокрутится внутри себя
   min-width: 0
 
+  .data-table__table td:nth-child(3)
+    white-space: normal
+    overflow-wrap: anywhere
+    hyphens: none
+
+  .status
+    white-space: normal
+
   @include media(laptop)
     width: 100%
 
@@ -144,6 +152,10 @@
 
       th:nth-child(2)
         width: 27%
+
+      td:nth-child(-n + 2)
+        white-space: nowrap
+        hyphens: none
 
     .status
       font-size: 13px
