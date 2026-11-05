@@ -2919,7 +2919,7 @@ a.dz-remove {
 }
 .weekly-cards__track {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 10px;
 }
 .weekly-cards--slider {
